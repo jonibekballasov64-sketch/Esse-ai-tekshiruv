@@ -1,0 +1,16 @@
+{
+  "name": "nargiza-esse-bot",
+  "version": "1.0.0",
+  "description": "Milliy Sertifikat esse (yozma ish) ni 12 band mezoni asosida sun'iy intellekt bilan baholovchi Telegram bot",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.16.3"
+  }
+}
