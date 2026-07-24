@@ -42,43 +42,44 @@ Xulosa maqol bilan boshlanishi mumkin (ixtiyoriy, bo'lmasa xato emas). MUHIM: xu
 Bu bandlarni SUST/YUZAKI emas, CHUQUR tekshir — har bir jumlani diqqat bilan o'qib chiq:
 - Imlo (7-band): so'zlarning noto'g'ri yozilishini top (apostrof variantlari [1-qoidaga qara] bundan mustasno).
 - Punktuatsiya (8-band): vergul, nuqta, tire va boshqa belgilarning noto'g'ri/yetishmasligini top (vergüldan keyingi bo'shliq [2-qoidaga qara] bundan mustasno).
-- Qo'shimcha xatolari (9-band): kelishik qo'shimchalarining noto'g'ri ishlatilishini AYNIQSA diqqat bilan tekshir — masalan qaratqich/tushum kelishigi chalkashtirilishi keng tarqalgan xato: "ning" o'rniga "ni" ishlatilishi, yoki egalik qo'shimchasi xatosi (masalan "mening kitobim" o'rniga "meni kitobim" — aniq 9-band xatosi).
+- Qo'shimcha xatolari (9-band): kelishik qo'shimchalarining noto'g'ri ishlatilishini AYNIQSA diqqat bilan tekshir — masalan qaratqich/tushum kelishigi chalkashtirilishi keng tarqalgan xato: "ning" o'rniga "ni" ishlatilishi (masalan "kitobning muqovasi" o'rniga "kitobni muqovasi"), yoki egalik qo'shimchasi xatosi (masalan "mening kitobim" o'rniga "meni kitobim" — bu "ni" kelishik qo'shimchasi egalik olmoshi o'rniga xato qo'llangani, aniq 9-band xatosi).
 - Uslubiy xato (10-band): so'zni noto'g'ri qo'llash, noo'rin takrorlash, ortiqcha qo'llash, tushirib qoldirish, bog'lovchi vositalar bilan bog'liq xato.
 - Qo'pol, varvar, sheva so'zlarni AYNIQSA diqqat bilan qidir (12-band) — chiroyli, adabiy jumlalar publitsistik uslubni kuchaytiradi, buni ham umumiy izohda ijobiy sifatida qayd et.
 
 === F) IZCHILLIK VA MAVZUGA ALOQADORLIK (6-band) ===
 
-Har bir gap/xatboshi MAVZUGA bevosita aloqadorligini albatta tekshir. Agar biror gap mavzudan chetga chiqsa — buni 6-band (izchillik)da aniq xato sifatida ko'rsat va nima uchun aloqasiz ekanini tushuntir.
+Har bir gap/xatboshi MAVZUGA bevosita aloqadorligini albatta tekshir. Agar biror gap mavzudan chetga chiqsa (masalan telefon haqidagi essede "telefonni kim ixtiro qilgani" haqida yozish — bu mavzu "telefonning foyda/zarari" bo'lsa, aloqasiz, chunki bu gap mavzuni ochmaydi) — buni 6-band (izchillik)da aniq xato sifatida ko'rsat va nima uchun aloqasiz ekanini tushuntir.
 
 === G) LEKSIK XILMA-XILLIK — KENGAYTIRILGAN MEZON (11-band) ===
 
 11-bandda FAQAT maqol/iboralarni emas, balki quyidagilarni ham IJOBIY omil sifatida hisobga ol:
-- Sinonimlardan foydalanish
+- Sinonimlardan foydalanish (bir xil so'zni turli sinonimlar bilan almashtirib ishlatish)
 - Neologizm/o'zlashma so'zlarning o'rinli qo'llanishi (masalan "student" o'rniga "talaba" yoki "ilm tolibi" kabi)
-- Maqol, ibora, barqaror birikmalar (o'rinli qo'llansa +, mos kelmasa xato sifatida ko'rsat)
+- Maqol, ibora, barqaror birikmalar (o'rinli qo'llansa +, mos kelmasa yoki noo'rin bo'lsa xato sifatida ko'rsat)
 
 === H) MAXSUS HOLAT: 2 BALL BILAN BAHOLASH ===
 
-Agar esse to'liq mavzudan chetga chiqib ketgan bo'lsa YOKI talabgor mavzuni umuman tushunmagan bo'lib chiqsa — rasmiy mezonga ko'ra JAMI 2 BALL beriladi. Bunday holatda "bands" massivida barcha 12 bandni baribir to'ldir, lekin ularning yig'indisi 2 ballga to'g'ri kelishi uchun mos taqsimla, va "umumiy_izoh"da buni ANIQ sababi bilan tushuntir.
+Agar esse to'liq mavzudan chetga chiqib ketgan bo'lsa YOKI talabgor mavzuni umuman tushunmagan bo'lib chiqsa — rasmiy mezonga ko'ra JAMI 2 BALL beriladi (batafsil 12 band bo'yicha emas). Bunday holatda "bands" massivida barcha 12 bandni baribir to'ldir, lekin ularning yig'indisi 2 ballga to'g'ri kelishi uchun mos taqsimla (masalan asosiy bandlarga 0 va faqat eng zaruriy bandga ozgina ball), va "umumiy_izoh"da buni ANIQ sababi bilan tushuntir: "Esse mavzuga mos kelmagani/talabgor mavzuni tushunmagani sababli rasmiy mezon bo'yicha 2 ball bilan baholandi."
 
 === MUHIM QO'SHIMCHA QOIDALAR (1-9, bularga ham QAT'IY rioya qil) ===
 
 1) APOSTROF/HARF VARIANTLARI XATO EMAS:
-"o'", "oʻ", "o‘", "ŏ", "ò", "ó", "ő" — bularning barchasi "oʻ" harfining turli klaviatura/texnik yozilishlari, ULARNI IMLO XATOSI DEB HISOBLAMA. Xuddi shunday "g'", "gʻ", "g‘" ham. Agar tizimli ishlatilgan bo'lsa — "ogohlantirishlar"ga bitta eslatma qo'sh.
+"o'", "oʻ", "o‘", "ŏ", "ò", "ó", "ő" — bularning barchasi "oʻ" harfining turli klaviatura/texnik yozilishlari, ULARNI IMLO XATOSI DEB HISOBLAMA (7-bandda ball kesma). Xuddi shunday "g'", "gʻ", "g‘" va shu kabi variantlar ham "gʻ" harfining yozilishlari, ULARNI HAM XATO DEB HISOBLAMA.
+Agar matnda bu harflar standart bo'lmagan ko'rinishda tizimli ishlatilgan bo'lsa — buni ball kesish uchun ishlatma, lekin "ogohlantirishlar" ro'yxatiga bitta umumiy eslatma qo'sh.
 
-2) VERGULDAN KEYIN BO'SHLIQ YO'QLIGI PUNKTUATSION XATO EMAS — "ogohlantirishlar"ga eslatma qo'sh.
+2) VERGULDAN KEYIN BO'SHLIQ YO'QLIGI (masalan "olma,nok") PUNKTUATSION XATO EMAS — 8-bandda ball kesma. "ogohlantirishlar"ga bitta umumiy eslatma qo'sh.
 
-3) MAQOL/IBORA 1-band (uslub)ga TA'SIR QILMAYDI — 11-bandga tegishli.
+3) MAQOL/IBORA 1-band (uslub)ga TA'SIR QILMAYDI — buni badiiy uslub belgisi deb hisoblab publitsistik ballni kesma. Maqol/iboralar 11-bandga tegishli (B va G bo'limlariga qara).
 
 4) XATONI TO'QIMA (hallucination qilma): faqat essening o'zida real mavjud bo'lgan xatoni ko'rsat.
 
-5) BIR XIL XATONING TAKRORLANISHI: band darajasini belgilashda BITTA holat sifatida hisobla, izohda "N marta takrorlangan" deb yoz.
+5) BIR XIL XATONING TAKRORLANISHI: agar bitta xato turi matnda bir necha marta uchrasa, band darajasini belgilashda BITTA holat sifatida hisobla, lekin izohda "N marta takrorlangan, bitta xato turi sifatida hisoblandi" deb yoz.
 
-6) Har bir band tahlilida ESSE MAVZUGA QANCHALIK ALOQADORLIGINI albatta tekshir.
+6) Har bir band tahlilida ESSE MAVZUGA QANCHALIK ALOQADORLIGINI albatta tekshir (F-bo'limga qara).
 
-7) YAQIN MASOFADA BIR XIL SO'ZNING TAKRORLANISHI — 6 yoki 10-bandda aniq ko'rsat.
+7) YAQIN MASOFADA BIR XIL SO'ZNING TAKRORLANISHI — 6 yoki 10-bandda aniq ko'rsat, qaysi so'z qaysi jumlalarda takrorlangani bilan.
 
-8) Gap bog'lovchi bilan mustaqil gap sifatida boshlansa — 5-bandda xato, qo'shma gap qilish tavsiya etiladi.
+8) Gap "va", "hamda", "lekin", "shuning uchun" kabi BOG'LOVCHI bilan mustaqil gap sifatida (nuqtadan keyin) BOSHLANSA — 5-bandda xato, qo'shma gap qilish tavsiya etiladi.
 
 9) HAR BIR XATO UCHUN ANIQ TUZATISH YO'LINI KO'RSAT: "[xato tavsifi] — to'g'risi: [tuzatilgan variant]" formatida.
 
@@ -100,7 +101,8 @@ Muhim qoidalar:
 - Agar biror bandda xato bo'lmasa (ball=2), "xatolar" massivini bo'sh qoldir yoki "Xatolik aniqlanmadi" deb yoz.
 - Har bir xato alohida qatorda, aniq va tushunarli qilib, tuzatish yo'li bilan yozilsin.
 - "ogohlantirishlar" bo'sh bo'lishi mumkin.
-- Tekshiruv CHUQUR bo'lishi shart — yuzaki, shoshma-shosharlik tahlildan qat'iy saqlan.`;
+- Tekshiruv CHUQUR bo'lishi shart — yuzaki, shoshma-shosharlik tahlildan qat'iy saqlan.
+- MUHIM: har bir "xatolar" elementini QISQA va LO'NDA yoz (taxminan 1-2 jumla, 30 so'zdan oshmasin) — chuqurlik so'z ko'pligida emas, aniqlikda. Bu javobning to'liq 12 band bilan tugashini kafolatlaydi. Javob HECH QACHON 12 banddan kam bilan tugamasligi kerak — agar joy tugab qolayotganday tuyulsa, oldingi bandlardagi xatolar sonini emas, qisqaligini oshir.`;
 
 async function evaluateEssay(topic, essayText) {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -116,7 +118,7 @@ async function evaluateEssay(topic, essayText) {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 4000,
+      max_tokens: 8000,
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
@@ -131,18 +133,22 @@ async function evaluateEssay(topic, essayText) {
   }
 
   const data = await response.json();
-  const raw = data.choices?.[0]?.message?.content;
+  const choice = data.choices?.[0];
+  const raw = choice?.message?.content;
   if (!raw) throw new Error('OpenAI javobida matn topilmadi');
 
   let parsed;
   try {
     parsed = JSON.parse(raw);
   } catch (e) {
-    throw new Error('OpenAI javobini JSON qilib o\'qib bo\'lmadi: ' + e.message);
+    const reason = choice?.finish_reason || 'noma\'lum';
+    throw new Error(`OpenAI javobini JSON qilib o'qib bo'lmadi (finish_reason: ${reason}): ${e.message}`);
   }
 
   if (!parsed.bands || !Array.isArray(parsed.bands) || parsed.bands.length !== 12) {
-    throw new Error('OpenAI javobida 12 ta band topilmadi');
+    const reason = choice?.finish_reason || 'noma\'lum';
+    const foundCount = Array.isArray(parsed.bands) ? parsed.bands.length : 0;
+    throw new Error(`OpenAI javobida 12 ta band topilmadi (topildi: ${foundCount}, finish_reason: ${reason})`);
   }
 
   return parsed;
