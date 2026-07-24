@@ -1,6 +1,6 @@
 const { FULL_RUBRIC_TEXT } = require('./criteria');
 
-const MODEL = 'claude-sonnet-5';
+const MODEL = 'gpt-4o';
 
 const SYSTEM_PROMPT = `Sen O'zbekiston Milliy Sertifikat (Attestatsiya) tizimida ona tili va adabiyot fanidan yoziladigan ESSE (yozma ish)ni rasmiy mezon asosida baholovchi ekspertsan.
 
@@ -25,48 +25,46 @@ Muhim qoidalar:
 - Agar esse mavzuga mos bo'lmasa, 100 so'zdan kam bo'lsa yoki ko'chirma bo'lib tuyulsa — buni "umumiy_izoh"da alohida ta'kidla, lekin baribir bandlarni baholab chiq.`;
 
 async function evaluateEssay(topic, essayText) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY sozlanmagan');
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error('OPENAI_API_KEY sozlanmagan');
 
   const userContent = `MAVZU: ${topic}\n\nESSE MATNI:\n${essayText}`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: MODEL,
       max_tokens: 4000,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userContent }],
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userContent },
+      ],
     }),
   });
 
   if (!response.ok) {
     const errText = await response.text();
-    throw new Error(`Claude API xatosi: ${response.status} ${errText}`);
+    throw new Error(`OpenAI API xatosi: ${response.status} ${errText}`);
   }
 
   const data = await response.json();
-  const textBlock = data.content.find((b) => b.type === 'text');
-  if (!textBlock) throw new Error('Claude javobida matn topilmadi');
-
-  let raw = textBlock.text.trim();
-  // Agar model markdown fence bilan o'ragan bo'lsa, tozalaymiz
-  raw = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '');
+  const raw = data.choices?.[0]?.message?.content;
+  if (!raw) throw new Error('OpenAI javobida matn topilmadi');
 
   let parsed;
   try {
     parsed = JSON.parse(raw);
   } catch (e) {
-    throw new Error('Claude javobini JSON qilib o\'qib bo\'lmadi: ' + e.message);
+    throw new Error('OpenAI javobini JSON qilib o\'qib bo\'lmadi: ' + e.message);
   }
 
   if (!parsed.bands || !Array.isArray(parsed.bands) || parsed.bands.length !== 12) {
-    throw new Error('Claude javobida 12 ta band topilmadi');
+    throw new Error('OpenAI javobida 12 ta band topilmadi');
   }
 
   return parsed;
