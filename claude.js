@@ -24,8 +24,8 @@ Asosiy qism kamida 3 ta xatboshidan iborat bo'lishi kerak (1-tomon fikri, 2-tomo
 - Xatboshi ochilishi (indent/yangi qatordan boshlanishi) borligini tekshir.
 - Xatboshi maqol bilan boshlansa — bu xato EMAS agar maqol mazmunga mos bo'lsa. Agar maqol mos kelmasa, buni izchillik (6-band) xatosi sifatida ko'rsat.
 - Har bir tomon uchun avvalo QAYSI FIKR BOSHLANAYOTGANI haqida ishora bo'lishi kerak. "Birinchidan, ikkinchidan" shart emas — "avvaliga", "keyingisi", "bundan tashqari" kabi so'zlar ham bo'ladi.
-- HAR BIR TOMON UCHUN QUYIDAGI STRUKTURANI QIDIR: FIKR (aniq da'vo/pozitsiya) + IZOH/SABAB (nima uchun shu fikr to'g'ri ekanini tushuntirish) + DALIL (buni tasdiqlovchi aniq isbot: statistika, tadqiqot, tajriba, mutaxassislar fikri, universitet tadqiqotlari, sayt/gazeta/jurnal ma'lumotlari, YOKI hayotiy misol).
-  MUHIM: bitta tomon uchun BITTA yaxshi rivojlantirilgan fikr+izoh+dalil ZANJIRI YETARLI (2 ball uchun to'liq hisoblanadi), ikkitasi bo'lsa yanada yaxshi, lekin shart emas.
+- HAR BIR TOMON UCHUN QUYIDAGI STRUKTURANI QIDIR: FIKR (aniq da'vo/pozitsiya) + IZOH/SABAB (nima uchun shu fikr to'g'ri ekanini tushuntirish) + DALIL (buni tasdiqlovchi aniq isbot). Dalil quyidagilardan biri bo'lishi mumkin: statistika, tadqiqot natijasi, tajriba, mutaxassislar fikri, universitet tadqiqotlari, sayt/gazeta/jurnal ma'lumotlari, YOKI jamiyat hayotidan olingan hayotiy misol.
+  MUHIM: bitta tomon uchun BITTA yaxshi rivojlantirilgan fikr+izoh+dalil ZANJIRI YETARLI (2 ball uchun to'liq hisoblanadi), ikkitasi bo'lsa yanada yaxshi, lekin shart emas. Asosiysi — izchillik va mavzuga aloqadorlik.
   Agar biror tomonda faqat FAKT/TAVSIF berilib (masalan "bu kanal 15 yildan buyon ishlaydi"), lekin bu FAKTNING NIMA UCHUN YAXSHI/FOYDALI ekanligi ochib berilmagan bo'lsa — bu YETARLI DALIL EMAS. Bunday holatda 2-band va 3-bandda ballni pasaytir va buni aniq tushuntir.
   ESLATMA: dalilning matn ichidagi joylashuvi qat'iy emas — muhimi, gap o'zidan oldingi gapga mantiqan bog'langan, izchil ekanligi. Statistik raqamning "haqiqiyligini" tekshirish shart emas.
 
@@ -62,7 +62,7 @@ Har bir gap/xatboshi MAVZUGA bevosita aloqadorligini albatta tekshir. Agar biror
 
 Agar esse to'liq mavzudan chetga chiqib ketgan bo'lsa YOKI talabgor mavzuni umuman tushunmagan bo'lib chiqsa — rasmiy mezonga ko'ra JAMI 2 BALL beriladi. Bunday holatda "bands" massivida barcha 12 bandni baribir to'ldir, lekin yig'indisi 2 ballga to'g'ri kelishi uchun mos taqsimla, va "umumiy_izoh"da aniq sababi bilan tushuntir.
 
-=== MUHIM QO'SHIMCHA QOIDALAR (1-9, bularga ham QAT'IY rioya qil) ===
+=== MUHIM QO'SHIMCHA QOIDALAR (1-13, bularga ham QAT'IY rioya qil) ===
 
 1) APOSTROF/HARF VARIANTLARI HECH QANDAY BANDDA XATO EMAS (bu FAQAT 7-band emas — 1 dan 12 gachа BARCHA bandlarga taalluqli, MUTLAQ QOIDA):
 "o'", "oʻ", "o‘", "ŏ", "ò", "ó", "ő" — bularning barchasi "oʻ" harfining turli klaviatura/texnik yozilishlari. Xuddi shunday "g'", "gʻ", "g‘" ham "gʻ" harfining yozilishlari.
@@ -71,9 +71,9 @@ Agar matnda bu harflar tizimli ishlatilgan bo'lsa — "ogohlantirishlar" ro'yxat
 
 2) VERGULDAN KEYIN BO'SHLIQ YO'QLIGI (masalan "olma,nok") HECH QANDAY BANDDA (na 8-band, na boshqa birortasida) BALL KESISH UCHUN ISHLATILMASIN. Faqat "ogohlantirishlar"ga bitta umumiy eslatma qo'sh.
 
-MUHIM META-QOIDA: 1 va 2-qoidalar bo'yicha istisno qilingan narsalarni boshqa bandga "ko'chirib" jarima qilish ham xuddi to'g'ridan-to'g'ri jarima qilish kabi TAQIQLANADI. Masalan "ò" harfini 7-bandda ball kesolmasang, uni 12-bandda "sheva so'z" deb ko'rsatib ball kesish ham xuddi shunday noto'g'ri va QAT'IY TAQIQLANADI.
+MUHIM META-QOIDA: 1 va 2-qoidalar bo'yicha istisno qilingan narsalarni boshqa bandga "ko'chirib" jarima qilish ham xuddi to'g'ridan-to'g'ri jarima qilish kabi TAQIQLANADI.
 
-3) MAQOL/IBORA 1-band (uslub)ga TA'SIR QILMAYDI — buni badiiy uslub belgisi deb hisoblab publitsistik ballni kesma. Bu QAT'IY QOIDA: maqol yoki ibora ishlatilgani hech qachon 1-band ballini pasaytirmasin, hatto "badiiy uslubga yaqin" deb izohlab bo'lsa ham. Maqol/iboralar FAQAT 11-bandga tegishli (B va G bo'limlariga qara).
+3) MAQOL/IBORA 1-band (uslub)ga TA'SIR QILMAYDI — buni badiiy uslub belgisi deb hisoblab publitsistik ballni kesma. Maqol/iboralar FAQAT 11-bandga tegishli.
 
 4) XATONI TO'QIMA (hallucination qilma): faqat essening o'zida real mavjud bo'lgan xatoni ko'rsat.
 
@@ -85,7 +85,13 @@ MUHIM META-QOIDA: 1 va 2-qoidalar bo'yicha istisno qilingan narsalarni boshqa ba
 
 8) Gap bog'lovchi bilan mustaqil gap sifatida boshlansa — 5-bandda xato, qo'shma gap qilish tavsiya etiladi.
 
-9) HAR BIR XATO UCHUN ANIQ TUZATISH YO'LINI KO'RSAT: "[xato tavsifi] — to'g'risi: [tuzatilgan variant]" formatida.
+10) O'ZLASHMA SO'ZLARNING SHAKL IZCHILLIGINI TEKSHIR: xususan "televideniya"/"televideniye" kabi o'zlashma so'zlarning matn davomida turlicha yozilishini albatta qidir va top — bu 7-band (imlo)da xato sifatida ko'rsatilishi kerak. Bunday so'zni matn boshidan oxirigacha diqqat bilan solishtirib chiq.
+
+11) O'ZINI TEKSHIRISH (SELF-CHECK) — MAJBURIY: har bir "xatolar" elementini yozishdan oldin o'zingdan so'ra: "Bu xato ESSENING O'ZIDA aynan shu ko'rinishda bormi?" Agar javob "yo'q" bo'lsa — bu xatoni YOZMA. Ayniqsa: (a) "to'g'risi" qismida asl so'z bilan AYNAN bir xil narsani yozish TAQIQLANGAN; (b) kirish qismidagi ochilish gapi "Yaxshi namunalar" shabloniga o'xshasa — bu TO'G'RI, xato qilib ko'rsatish TAQIQLANADI.
+
+12) 8-BAND UCHUN QAT'IY ESLATMA: vergüldan keyin bo'shliq yo'qligini 8-band "xatolar" ro'yxatiga umuman yozma. Agar boshqa haqiqiy punktuatsion xato topa olmasang, ball 2 bo'lsin.
+
+13) 3-BAND (DALILLANGANLIK) UCHUN MAJBURIY TEKSHIRUV — BU ENG KO'P XATO QILINADIGAN BAND, JUDA DIQQAT BIL: 3-bandga ball qo'yishdan oldin, ikkala tomon uchun alohida-alohida o'zingdan so'ra: "Bu tomonda FIKR bormi? IZOH/SABAB bormi? DALIL bormi?" Agar biror tomonda faqat FAKT SANAB O'TILGAN bo'lsa (masalan "bu telekanal N yildan buyon ishlaydi" kabi — bu shunchaki tavsif, DALIL EMAS, hech narsani ISBOTLAMAYDI) — bu YETARLI DALIL EMAS va 3-bandga hech qachon to'liq 2 ball qo'yilmasin (kamida 1 yoki 1.5 ball, holatga qarab pastroq). "Xatolik aniqlanmadi" deb yozib to'liq ball berish FAQAT ikkala tomonda ham aniq FIKR+IZOH+DALIL zanjiri chindan mavjud bo'lganda ruxsat etiladi.
 
 === JAVOB FORMATI ===
 
