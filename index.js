@@ -3,8 +3,8 @@ const { evaluateEssay } = require('./claude');
 const { formatEvaluation, escapeHtml, splitLongText } = require('./format');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const GROUP_ID = process.env.GROUP_ID; // masalan: -1001234567890 yoki @guruh_username
-const ADMIN_ID = process.env.ADMIN_ID; // sizning shaxsiy Telegram ID'ingiz
+const GROUP_ID = process.env.GROUP_ID;
+const ADMIN_ID = process.env.ADMIN_ID;
 
 if (!BOT_TOKEN || !GROUP_ID || !ADMIN_ID) {
   console.error('BOT_TOKEN, GROUP_ID va ADMIN_ID Railway Variables bo\'limida sozlanishi shart!');
@@ -12,6 +12,14 @@ if (!BOT_TOKEN || !GROUP_ID || !ADMIN_ID) {
 }
 
 const bot = new Telegraf(BOT_TOKEN);
+
+// Bot FAQAT shaxsiy (private) chatda ishlaydi — guruhda yozilgan xabarlarga umuman javob bermaydi
+bot.use((ctx, next) => {
+  if (ctx.chat && ctx.chat.type !== 'private') {
+    return; // guruh/kanal xabarlarini e'tiborsiz qoldiramiz
+  }
+  return next();
+});
 
 // Foydalanuvchi holati: userId -> { state: 'awaiting_topic'|'awaiting_essay', topic }
 const sessions = new Map();
@@ -52,7 +60,7 @@ bot.command('bekor', (ctx) => {
 
 bot.on('text', async (ctx) => {
   const text = ctx.message.text;
-  if (text.startsWith('/')) return; // buyruqlar alohida ishlanadi
+  if (text.startsWith('/')) return;
 
   const userId = ctx.from.id;
   const session = sessions.get(userId);
@@ -78,7 +86,7 @@ bot.on('text', async (ctx) => {
   if (session.state === 'awaiting_essay') {
     const essayText = text;
     const topic = session.topic;
-    sessions.set(userId, { state: 'awaiting_topic' }); // keyingi esse uchun darhol tayyor
+    sessions.set(userId, { state: 'awaiting_topic' });
 
     const waitMsg = await ctx.reply('⏳ Tekshirilmoqda... Iltimos, kuting.');
 
@@ -96,7 +104,6 @@ bot.on('text', async (ctx) => {
         "Yangi esse yuborish uchun mavzuni kiriting, yoki /start bosing."
       );
 
-      // Adminga (va sizga) xabar yuborish
       const userLabel = getUserLabel(ctx.from);
       const header =
         `👤 <b>Foydalanuvchi:</b> ${escapeHtml(userLabel)} (ID: ${userId})\n` +
