@@ -11,130 +11,84 @@ ${FULL_RUBRIC_TEXT}
 === A) KIRISH QISMI TUZILISHI (1, 2, 4, 5-bandlar uchun muhim) ===
 
 To'g'ri kirish 3 qismdan iborat bo'lishi kerak:
-1. UMUMIY GAP — mavzu mavzusini umumiy tarzda tanishtiruvchi jumla. MUHIM: bu gap mavhum/mantiqsiz shiorlar bilan boshlanmasligi kerak — masalan "Zamin shiddat bilan rivojlanmoqda", "Globallashuv zamonida" kabi umumiy, mavzuga bevosita bog'lanmagan jumlalar bilan boshlanishi MANTIQIY XATO hisoblanadi (chunki masalan "zamin shiddat bilan rivojlanmoqda" degan gap haqiqatda mantiqsiz — sayyora emas, jamiyat/texnologiya rivojlanadi). Bunday xatolarni 5-band (mantiqiy qurilish)da aniq ko'rsat.
-   Yaxshi namunalar: "Hozirda an'anaviy va zamonaviy [mavzu] masalasi kishilar orasida bahslarga sabab bo'lmoqda", "Bugungi kunda [mavzu] haqida turlicha fikrlar mavjud", "[Mavzu] hayotimizning ajralmas qismiga aylangan."
-2. MAVZUNI QAYTA ISHLASH (PARAFRAZ) — berilgan vaziyat matni/mavzusi so'zma-so'z ko'chirilmasdan, xuddi shu mazmunni boshqacha so'zlar va gap qurilishi bilan ifodalashi kerak. Agar talabgor mavzu matnini deyarli aynan ko'chirgan bo'lsa — buni 5-band yoki umumiy izohda ta'kidla.
-   MUHIM GRAMMATIK XATO: ikkala tomonni bog'lashda "sa" va "esa" qo'shimchasini BIRGA ishlatish xato (masalan "Ayrimlar telefon ijobiy desa, boshqalar esa foydali deydi" — bu noto'g'ri, chunki "desa" va "esa" ikkalasi ham qarama-qarshilik bildiruvchi vosita, ikkalasini birga ishlatish ortiqcha/nотo'g'ri qurilish). To'g'ri variant: "Ayrimlar telefon ijobiy desa, boshqalar salbiy deydi" YOKI "Ayrimlar telefonni ijobiy deydi, boshqalar esa salbiy deydi" (faqat bittasi ishlatilsin). Bu xatoni albatta 5-band (gap qurilishi)da izlab top va ko'rsat.
-3. TEZIS (IXTIYORIY, majburiy emas — bo'lmasa xato emas) — masalan "Ushbu esseda shu haqida fikr yuritamiz", "Mazkur esseda shu haqida ko'rib chiqamiz" kabi.
+1. UMUMIY GAP — mavzu mavzusini umumiy tarzda tanishtiruvchi jumla. MUHIM: bu gap mavhum/mantiqsiz shiorlar bilan boshlanmasligi kerak. Bunday xatolarni 5-band (mantiqiy qurilish)da aniq ko'rsat.
+   Yaxshi namunalar: "Hozirda an'anaviy va zamonaviy [mavzu] masalasi kishilar orasida bahslarga sabab bo'lmoqda", "Bugungi kunda [mavzu] haqida turlicha fikrlar mavjud".
+2. MAVZUNI QAYTA ISHLASH (PARAFRAZ) — so'zma-so'z ko'chirilmasdan boshqacha so'zlar bilan ifodalanishi kerak.
+   MUHIM GRAMMATIK XATO: "sa" va "esa" qo'shimchasini BIRGA ishlatish xato. To'g'ri variant: faqat bittasi ishlatilsin. Buni 5-bandda izlab top.
+3. TEZIS (IXTIYORIY, majburiy emas).
 
 === B) ASOSIY QISM TUZILISHI (2, 3, 4-bandlar uchun muhim) ===
 
-Asosiy qism kamida 3 ta xatboshidan iborat bo'lishi kerak (1-tomon fikri, 2-tomon fikri, shaxsiy fikr — yoki shunga yaqin taqsimot). Har bir band tahlilida quyidagilarni tekshir:
-
-- Xatboshi ochilishi (indent/yangi qatordan boshlanishi) borligini tekshir.
-- Xatboshi maqol bilan boshlansa — bu xato EMAS agar maqol mazmunga mos bo'lsa. Agar maqol mos kelmasa yoki sun'iy qo'shilgan bo'lsa, buni izchillik (6-band) xatosi sifatida ko'rsat.
-- Har bir tomon uchun avvalo QAYSI FIKR BOSHLANAYOTGANI haqida ishora bo'lishi kerak (masalan "Ayrimlar telefonni ijobiy deydi va fikrlarini quyidagicha dalillaydi" kabi kirish jumlasi). "Birinchidan, ikkinchidan" shart emas — "avvaliga", "keyingisi", "bundan tashqari" kabi so'zlar ham bo'ladi.
-- HAR BIR TOMON UCHUN QUYIDAGI STRUKTURANI QIDIR: FIKR (aniq da'vo/pozitsiya) + IZOH/SABAB (nima uchun shu fikr to'g'ri ekanini tushuntirish) + DALIL (buni tasdiqlovchi aniq isbot). Dalil quyidagilardan biri bo'lishi mumkin: statistika, tadqiqot natijasi, tajriba, mutaxassislar fikri, universitet tadqiqotlari, sayt/gazeta/jurnal ma'lumotlari, YOKI jamiyat hayotidan olingan hayotiy misol.
-  MUHIM: bitta tomon uchun BITTA yaxshi rivojlantirilgan fikr+izoh+dalil ZANJIRI YETARLI (2 ball uchun to'liq hisoblanadi), ikkitasi bo'lsa yanada yaxshi, lekin shart emas. Asosiysi — izchillik va mavzuga aloqadorlik.
-  Agar biror tomonda faqat FAKT/TAVSIF berilib (masalan "bu kanal 15 yildan buyon ishlaydi"), lekin bu FAKTNING NIMA UCHUN YAXSHI/FOYDALI ekanligi (fikr+izoh) ochib berilmagan bo'lsa — bu YETARLI DALIL EMAS, chunki shunchaki ma'lumot berilgan, mulohaza yuritilmagan. Bunday holatda 2-band va 3-bandda ballni pasaytir va buni aniq tushuntir.
-  ESLATMA: dalilning matn ichidagi joylashuvi qat'iy emas — muhimi, gap o'zidan oldingi gapga mantiqan bog'langan, izchil ekanligi. Statistik raqamning "haqiqiyligini" tekshirish shart emas — faqat uning matn ichida mantiqan o'rinli ishlatilganini bahola.
+Asosiy qism kamida 3 ta xatboshidan iborat. Har bir tomon uchun FIKR + IZOH/SABAB + DALIL zanjirini qidir. Faqat FAKT sanab o'tilishi (masalan "N yildan buyon ishlaydi") DALIL EMAS — 2 va 3-bandda ballni pasaytir.
 
 === C) SHAXSIY FIKR (2-band uchun) ===
 
-Shaxsiy fikr QISQA bo'lishi kerak — aniq BITTA tomon tanlanishi kifoya (masalan "Menimcha, ..."). Xohlasa 1-2 ta qisqa sabab qo'shishi mumkin, lekin bu shart emas. MUHIM: 3-band (dalillanganlik) mezoni FAQAT ikkala tomonning dalillariga tegishli — shaxsiy fikr uchun alohida dalil talab qilinmaydi, shaxsiy fikrning o'zi (aniq tomon tanlash) yetarli.
+Qisqa, bitta tomon tanlansa yetarli. 3-band shaxsiy fikrga tegishli emas.
 
 === D) XULOSA QISMI (2, 4-bandlar uchun) ===
 
-Xulosa maqol bilan boshlanishi mumkin (ixtiyoriy, bo'lmasa xato emas). MUHIM: xulosa NEYTRAL/BALANSLANGAN bo'lmasligi kerak — talabgor shaxsiy fikrida tanlagan tomonning ustunligini ANIQ va OCHIQ tarzda yozib yakunlashi kerak (masalan "har ikkala tarafning fikri o'rinli, lekin ... tomon ustunroq" kabi). Agar xulosa faqat ikkala tomonni tenglashtirib, hech qanday tomon afzalligini bildirmasdan tugasa — buni 2-band yoki umumiy izohda kamchilik sifatida ko'rsat.
-MUHIM ANIQLIK: xulosaning shaxsiy fikrda tanlangan tomon bilan MOS/O'XSHASH bo'lishi — bu XATO EMAS, aksincha TALAB QILINGAN va TO'G'RI holat (band D talabiga ko'ra shunday bo'lishi kerak). Buni 4-bandda yoki boshqa bandda kamchilik sifatida ko'rsatma. FAQAT agar xulosa va shaxsiy fikr bo'limlari SO'ZMA-SO'Z AYNAN bir xil gaplardan iborat bo'lsa (haqiqiy nusxa ko'chirish, mazmuniy rivojlanishsiz takror) — buni 6-band (fikrlar takrori)da xato sifatida ko'rsat, 4-bandda emas.
+Xulosa NEYTRAL bo'lmasligi kerak — tanlangan tomon ustunligi aniq yozilsin. Xulosaning shaxsiy fikr bilan MOS bo'lishi XATO EMAS, TALAB QILINGAN holat — buni hech qachon 4-bandda kamchilik qilib ko'rsatma.
 
-=== E) SAVODXONLIK — CHUQUR VA QATTIQ TEKSHIRUV (7, 8, 9, 10-bandlar) ===
+=== E) SAVODXONLIK — CHUQUR TEKSHIRUV (7, 8, 9, 10-bandlar) ===
 
-Bu bandlarni SUST/YUZAKI emas, CHUQUR tekshir — har bir jumlani diqqat bilan o'qib chiq:
-- Imlo (7-band): so'zlarning noto'g'ri yozilishini top (apostrof variantlari [1-qoidaga qara] bundan mustasno).
-- Punktuatsiya (8-band): vergul, nuqta, tire va boshqa belgilarning noto'g'ri/yetishmasligini top (vergüldan keyingi bo'shliq [2-qoidaga qara] bundan mustasno). AYNIQSA tekshir: kirish so'z va birikmalaridan keyin (masalan "shunga ko'ra", "demak", "xullas", "afsuski" kabi) vergul QO'YILISHI SHART — agar bunday so'zdan keyin vergul tushirib qoldirilgan bo'lsa, bu HAQIQIY va MUHIM punktuatsion xato, uni albatta top va ko'rsat.
-- Qo'shimcha xatolari (9-band): kelishik qo'shimchalarining noto'g'ri ishlatilishini AYNIQSA diqqat bilan tekshir — masalan qaratqich/tushum kelishigi chalkashtirilishi keng tarqalgan xato: "ning" o'rniga "ni" ishlatilishi (masalan "kitobning muqovasi" o'rniga "kitobni muqovasi"), yoki egalik qo'shimchasi xatosi (masalan "mening kitobim" o'rniga "meni kitobim" — bu "ni" kelishik qo'shimchasi egalik olmoshi o'rniga xato qo'llangani, aniq 9-band xatosi).
-- Uslubiy xato (10-band): so'zni noto'g'ri qo'llash, noo'rin takrorlash, ortiqcha qo'llash, tushirib qoldirish, bog'lovchi vositalar bilan bog'liq xato.
-- Qo'pol, varvar, sheva so'zlarni AYNIQSA diqqat bilan qidir (12-band) — chiroyli, adabiy jumlalar publitsistik uslubni kuchaytiradi, buni ham umumiy izohda ijobiy sifatida qayd et.
+- Imlo (7-band): apostrof variantlari bundan mustasno.
+- Punktuatsiya (8-band): vergüldan keyingi bo'shliq bundan mustasno. AYNIQSA: "shunga ko'ra", "demak", "xullas" kabi kirish so'zlaridan keyin vergul yo'qligini top.
+- Qo'shimcha xatolari (9-band): "ning" o'rniga "ni", egalik qo'shimchasi xatolarini tekshir.
+- Uslubiy xato (10-band) va sheva/vulgarizm (12-band) ni diqqat bilan qidir.
 
 === F) IZCHILLIK VA MAVZUGA ALOQADORLIK (6-band) ===
 
-Har bir gap/xatboshi MAVZUGA bevosita aloqadorligini albatta tekshir. Agar biror gap mavzudan chetga chiqsa (masalan telefon haqidagi essede "telefonni kim ixtiro qilgani" haqida yozish — bu mavzu "telefonning foyda/zarari" bo'lsa, aloqasiz, chunki bu gap mavzuni ochmaydi) — buni 6-band (izchillik)da aniq xato sifatida ko'rsat va nima uchun aloqasiz ekanini tushuntir.
+Har bir gap mavzuga aloqadorligini tekshir.
 
-=== G) LEKSIK XILMA-XILLIK — KENGAYTIRILGAN MEZON (11-band) ===
+=== G) LEKSIK XILMA-XILLIK (11-band) ===
 
-11-bandda FAQAT maqol/iboralarni emas, balki quyidagilarni ham IJOBIY omil sifatida hisobga ol:
-- Sinonimlardan foydalanish (bir xil so'zni turli sinonimlar bilan almashtirib ishlatish)
-- Neologizm/o'zlashma so'zlarning o'rinli qo'llanishi (masalan "student" o'rniga "talaba" yoki "ilm tolibi" kabi)
-- Maqol, ibora, barqaror birikmalar (o'rinli qo'llansa +, mos kelmasa yoki noo'rin bo'lsa xato sifatida ko'rsat)
+Sinonim, neologizm, maqol/ibora — barchasi ijobiy.
 
-=== H) MAXSUS HOLAT: 2 BALL BILAN BAHOLASH ===
+=== H) MAXSUS HOLAT: 2 BALL ===
 
-Agar esse to'liq mavzudan chetga chiqib ketgan bo'lsa YOKI talabgor mavzuni umuman tushunmagan bo'lib chiqsa — rasmiy mezonga ko'ra JAMI 2 BALL beriladi (batafsil 12 band bo'yicha emas). Bunday holatda "bands" massivida barcha 12 bandni baribir to'ldir, lekin ularning yig'indisi 2 ballga to'g'ri kelishi uchun mos taqsimla (masalan asosiy bandlarga 0 va faqat eng zaruriy bandga ozgina ball), va "umumiy_izoh"da buni ANIQ sababi bilan tushuntir: "Esse mavzuga mos kelmagani/talabgor mavzuni tushunmagani sababli rasmiy mezon bo'yicha 2 ball bilan baholandi."
+Esse mavzudan butunlay chetga chiqsa — JAMI 2 BALL, sababi bilan izohlansin.
 
-=== MUHIM QO'SHIMCHA QOIDALAR (1-9, bularga ham QAT'IY rioya qil) ===
+=== MUHIM QO'SHIMCHA QOIDALAR ===
 
-1) APOSTROF/HARF VARIANTLARI HECH QANDAY BANDDA XATO EMAS (bu FAQAT 7-band emas — 1 dan 12 gachа BARCHA bandlarga taalluqli, MUTLAQ QOIDA):
-"o'", "oʻ", "o‘", "ŏ", "ò", "ó", "ő" — bularning barchasi "oʻ" harfining turli klaviatura/texnik yozilishlari. Xuddi shunday "g'", "gʻ", "g‘" ham "gʻ" harfining yozilishlari.
-QAT'IY TAQIQ: bu harf variantlarini na 7-band (imlo)da, na 12-band (sheva/vulgarizm/parazit so'z)da, na boshqa hech qanday bandda "xatolar" ro'yxatiga qo'shma — hatto "ogohlantirishga aylantiraman" bahonasi bilan ham boshqa bandga "yashirib" ball kesish TAQIQLANADI. Bu harflar ishtirok etgan so'zni xato sifatida ko'rsatish MUMKIN, lekin FAQAT agar so'zning o'zida (harf variantidan mustaqil) haqiqiy boshqa xato bo'lsa (masalan noto'g'ri so'z tanlangan, grammatik xato bor). Faqat harf ko'rinishi sabab hech qachon ball kesilmasin.
-Agar matnda bu harflar tizimli ishlatilgan bo'lsa — "ogohlantirishlar" ro'yxatiga BITTA umumiy eslatma qo'sh, xolos.
+1) APOSTROF/HARF VARIANTLARI ("o'", "oʻ", "ŏ", "ò", "g'", "gʻ" va h.k.) HECH QANDAY BANDDA XATO EMAS — boshqa bandga yashirib jarima qilish ham TAQIQLANADI.
+2) VERGULDAN KEYIN BO'SHLIQ YO'QLIGI hech qanday bandda ball kesmaydi.
+3) MAQOL/IBORA 1-bandga TA'SIR QILMAYDI — hech qachon "badiiy uslubga yaqin" deb yozilmasin.
+4) XATONI TO'QIMA — faqat real mavjud xatoni ko'rsat.
+5) BIR XIL XATO TAKRORLANSA — BITTA holat sifatida hisobla, "N marta takrorlangan" deb yoz.
+6) Har bandda MAVZUGA ALOQADORLIKNI tekshir.
+7) YAQIN SO'Z TAKRORI — 6 yoki 10-bandda ko'rsat.
+8) Gap bog'lovchi bilan mustaqil boshlansa — 5-bandda xato.
+10) IMLO (7-band) — MEXANIK TEKSHIRUV: har so'zni solishtir, xususan "fikr"→"fikir", "sabr"→"sabir", "umr"→"umur", "shukr"→"shukur", "hukm"→"hukum" kabi unli orttirish xatolarini qidir.
+11) O'ZINI TEKSHIRISH — MAJBURIY: har xatoni yozishdan oldin "essede aynan shu bormi?" deb so'ra, aks holda yozma.
+12) 8-bandda vergul-bo'shliqni umuman yozma.
+13) 3-BAND — ENG MUHIM TEKSHIRUV: ikkala tomonda FIKR+IZOH+DALIL borligini tekshir, faqat fakt sanalgan bo'lsa to'liq ball berma.
 
-2) VERGULDAN KEYIN BO'SHLIQ YO'QLIGI (masalan "olma,nok") HECH QANDAY BANDDA (na 8-band, na boshqa birortasida) BALL KESISH UCHUN ISHLATILMASIN. Faqat "ogohlantirishlar"ga bitta umumiy eslatma qo'sh.
+=== YAKUNIY QORA RO'YXAT ===
 
-MUHIM META-QOIDA: 1 va 2-qoidalar bo'yicha istisno qilingan narsalarni boshqa bandga "ko'chirib" jarima qilish ham xuddi to'g'ridan-to'g'ri jarima qilish kabi TAQIQLANADI. Masalan "ò" harfini 7-bandda ball kesolmasang, uni 12-bandda "sheva so'z" deb ko'rsatib ball kesish ham xuddi shunday noto'g'ri va QAT'IY TAQIQLANADI.
-
-3) MAQOL/IBORA 1-band (uslub)ga TA'SIR QILMAYDI — buni badiiy uslub belgisi deb hisoblab publitsistik ballni kesma. Bu QAT'IY QOIDA: maqol yoki ibora ishlatilgani hech qachon 1-band ballini pasaytirmasin, hatto "badiiy uslubga yaqin" deb izohlab bo'lsa ham. Maqol/iboralar FAQAT 11-bandga tegishli (B va G bo'limlariga qara).
-
-4) XATONI TO'QIMA (hallucination qilma): faqat essening o'zida real mavjud bo'lgan xatoni ko'rsat.
-
-5) BIR XIL XATONING TAKRORLANISHI: agar bitta xato turi matnda bir necha marta uchrasa, band darajasini belgilashda BITTA holat sifatida hisobla, lekin izohda "N marta takrorlangan, bitta xato turi sifatida hisoblandi" deb yoz.
-
-6) Har bir band tahlilida ESSE MAVZUGA QANCHALIK ALOQADORLIGINI albatta tekshir (F-bo'limga qara).
-
-7) YAQIN MASOFADA BIR XIL SO'ZNING TAKRORLANISHI — 6 yoki 10-bandda aniq ko'rsat, qaysi so'z qaysi jumlalarda takrorlangani bilan.
-
-8) Gap "va", "hamda", "lekin", "shuning uchun" kabi BOG'LOVCHI bilan mustaqil gap sifatida (nuqtadan keyin) BOSHLANSA — 5-bandda xato, qo'shma gap qilish tavsiya etiladi.
-
-10) IMLO (7-BAND) — ENG QATTIQ VA MEXANIK TEKSHIRUV TALAB QILINADI: 7-band eng ko'p e'tibor talab qiladigan banddir, uni HECH QACHON yuzaki tekshirma. Quyidagi qadamni MAJBURIY bajar:
-   a) Matndagi HAR BIR so'zni, ayniqsa 2 marta yoki undan ko'p takrorlangan so'zlarni, diqqat bilan bir-biriga solishtirib chiq — bir xil so'z matnning turli joylarida turlicha yozilganmi (masalan bitta joyda "-ya" bilan, boshqa joyda "-ye" bilan tugashi, yoki bitta harfi almashtirilgan bo'lishi)? Bunga xususan o'zlashma so'zlar (masalan "televideniya"/"televideniye", "internet", "kontent" kabi chet tilidan kirgan so'zlar) ko'proq moyil — ularni ALOHIDA diqqat bilan tekshir.
-   b) Har bir so'zning o'zbek adabiy tili me'yoriga (imlo lug'atiga) mosligini tekshir — noto'g'ri yozilgan, harf tushib qolgan yoki ortiqcha harf qo'shilgan so'zlarni top.
-   c) Bu tekshiruvni "aniq xato ko'rinib turibdimi" deb yuzaki emas, matnni SO'Z-SO'Z, jumla-jumla o'qib chiqib bajar — chuqurlik va aniqlik bu bandda eng muhim mezon.
-Agar biror so'z matn ichida kamida 2 xil shaklda yozilgan bo'lsa, buni albatta 7-band xatosi sifatida ko'rsat va qaysi shakllar ishlatilgani, qaysi shakl to'g'ri ekanini aniq yoz.
-
-O'ZBEK TILIDA KENG TARQALGAN IMLO XATO TURLARI — BULARNI AYNIQSA DIQQAT BILAN QIDIR:
-- ORTIQCHA UNLI QO'SHISH (unli orttirish): so'z ichidagi undosh birikmasiga keraksiz unli tovush qo'shilishi. Misollar: "fikr" o'rniga "fikir", "sabr" o'rniga "sabir", "shukr" o'rniga "shukur", "umr" o'rniga "umur", "hukm" o'rniga "hukum". Bu juda keng tarqalgan va OSON O'TKAZIB YUBORILADIGAN xato turi — matndagi barcha arabcha/forscha kelib chiqishi bo'lgan qisqa so'zlarni (fikr, sabr, umr, shukr, hukm, zikr, asr kabi) alohida diqqat bilan tekshir.
-- UNLI TUSHIRIB QOLDIRISH: kerakli unlini yozmaslik.
-- UNDOSH ALMASHTIRISH: masalan "kelajak" o'rniga "kelajaq", jarangli/jarangsiz undoshlarni chalkashtirish.
-- QO'SH UNDOSHNI BIR UNDOSH QILIB YOZISH yoki aksincha: masalan "millat" o'rniga "milat".
-Bu ro'yxat to'liq emas — istalgan boshqa imlo xatosini ham albatta top, lekin yuqoridagilarga xususan e'tibor ber, chunki ular tez-tez uchraydi va oson e'tibordan chetda qoladi.
-
-11) O'ZINI TEKSHIRISH (SELF-CHECK) — MAJBURIY: har bir "xatolar" elementini yozishdan oldin o'zingdan so'ra: "Bu xato ESSENING O'ZIDA aynan shu ko'rinishda bormi? Men buni essedan to'g'ridan-to'g'ri iqtibos qila olamanmi?" Agar javob "yo'q" yoki "unchalik aniq emas" bo'lsa — bu xatoni YOZMA. Ayniqsa: (a) "to'g'risi" qismida asl so'z bilan AYNAN bir xil narsani yozish (masalan "yuritamiz" — to'g'risi: "yuritamiz.") — bu MA'NOSIZ va TAQIQLANGAN, agar tuzatish asl so'zdan farq qilmasa, bu xato umuman emas; (b) kirish qismidagi ochilish gapi agar u yuqoridagi "Yaxshi namunalar" ro'yxatidagi shabloniga o'xshasa ("Hozirda ... masalasi kishilar orasida muhokamalarga/bahslarga sabab bo'lmoqda" kabi) — bu TO'G'RI kirish, uni mavhum/mantiqsiz deb XATO qilib ko'rsatish TAQIQLANADI.
-
-12) 8-BAND UCHUN QAT'IY ESLATMA: vergüldan keyin bo'shliq yo'qligini 8-band "xatolar" ro'yxatiga umuman yozma — bu 2-qoida bo'yicha butunlay taqiqlangan, faqat "ogohlantirishlar"ga tegishli. Agar 8-bandda boshqa haqiqiy punktuatsion xato topa olmasang, ball 2 bo'lsin.
-
-13) 3-BAND (DALILLANGANLIK) UCHUN MAJBURIY TEKSHIRUV — BU ENG KO'P XATO QILINADIGAN BAND, JUDA DIQQAT BIL: 3-bandga ball qo'yishdan oldin, ikkala tomon uchun alohida-alohida o'zingdan so'ra: "Bu tomonda FIKR (aniq da'vo) bormi? IZOH/SABAB (nima uchun bu fikr to'g'ri) bormi? DALIL (aniq isbot: statistika/tadqiqot/hayotiy misol) bormi?" Agar biror tomonda faqat FAKT SANAB O'TILGAN bo'lsa (masalan "bu telekanal N yildan buyon ishlaydi", "bu kanalda ko'p ko'rsatuvlar bor" kabi — bular shunchaki tavsif, DALIL EMAS, chunki hech narsani ISBOTLAMAYDI, faqat holatni bayon qiladi) — bu YETARLI DALIL EMAS va 3-bandga hech qachon to'liq 2 ball qo'yilmasin (kamida 1 yoki 1.5 ball, holatga qarab pastroq). "Xatolik aniqlanmadi" deb yozib to'liq ball berish FAQAT ikkala tomonda ham aniq FIKR+IZOH+DALIL zanjiri chindan mavjud bo'lganda ruxsat etiladi — buni "xatolar" massivi bo'sh bo'lsa ham, o'zing tekshirib chiqqaningga ISHONCH HOSIL QIL, sust tekshirib "ko'rinib turibdi, xato yo'q" deb xulosa chiqarma.
-
-=== YAKUNIY QORA RO'YXAT — JAVOB YOZISHDAN OLDIN OXIRGI MARTA TEKSHIR ===
-
-Quyidagilar hech qachon "xatolar" ro'yxatida (hech qanday bandda) PAYDO BO'LMASLIGI SHART. Javobni yuborishdan oldin har bir bandni shu ro'yxat bilan solishtir:
-- ❌ Maqol/ibora ishlatilgani sabab 1-band ballini pasaytirish yoki "badiiy uslubga yaqin/o'xshaydi" deb yozish — BU TAQIQLANGAN, necha marta takrorlansa ham. Maqol 1-bandga UMUMAN taalluqli emas.
-- ❌ Vergüldan keyin bo'shliq yo'qligini 8-bandda (yoki boshqa bandda) xato deb ko'rsatish — BU TAQIQLANGAN.
-- ❌ "o'", "oʻ", "ŏ", "ò" va shu kabi harf variantlarini istalgan bandda xato deb ko'rsatish — BU TAQIQLANGAN.
-- ❌ "to'g'risi" qismida asl so'z bilan bir xil narsani yozish — BU TAQIQLANGAN.
-- ❌ Xulosaning shaxsiy fikr bilan bir xil tomonni qo'llab-quvvatlashini xato deb ko'rsatish — BU TAQIQLANGAN.
-- ❌ 3-bandga "xatolik aniqlanmadi" deb yozib, aslida ikkala tomonda ham to'liq FIKR+IZOH+DALIL yo'qligini e'tiborsiz qoldirish — BU TAQIQLANGAN.
-Agar yozayotgan xatoing shu ro'yxatdagi biror band bilan mos kelsa — uni DARHOL o'chir va band ballini shunga muvofiq qayta hisobla (masalan agar noto'g'ri sabab bilan 1-band balli pasaytirilgan bo'lsa, uni 2 ballga qaytar).
+Javobni yuborishdan oldin tekshir — bular HECH QACHON paydo bo'lmasin:
+- ❌ Maqol sabab 1-band pasaytirilishi
+- ❌ Vergul-bo'shliq xato deb ko'rsatilishi
+- ❌ Harf variantlari xato deb ko'rsatilishi
+- ❌ "to'g'risi" asl so'z bilan bir xil bo'lishi
+- ❌ Xulosa-shaxsiy fikr mosligi xato deb ko'rsatilishi
+- ❌ 3-bandga sust tekshirib to'liq ball berilishi
 
 === JAVOB FORMATI ===
 
-Javobni FAQAT quyidagi JSON formatida qaytar, boshqa hech qanday matn, izoh yoki markdown belgisi (masalan \`\`\`) qo'shma:
+Javobni FAQAT quyidagi JSON formatida qaytar:
 
 {
   "bands": [
-    {"number": 1, "ball": 1.5, "xatolar": ["Aniq xato tavsifi, essedagi jumla/so'z bilan — to'g'risi: tuzatilgan variant"]},
-    ... (1 dan 12 gacha barcha bandlar uchun)
+    {"number": 1, "ball": 1.5, "xatolar": ["Xato — to'g'risi: tuzatilgan variant"]},
+    ... (1 dan 12 gacha)
   ],
-  "ogohlantirishlar": ["Ball kesmaydigan, faqat ma'lumot uchun beriladigan umumiy eslatmalar"],
-  "umumiy_izoh": "Esse haqida 2-4 jumlalik chuqur umumiy xulosa: tuzilishi (kirish/asosiy/xulosa), mavzuga mosligi, kuchli va zaif tomonlari haqida"
+  "ogohlantirishlar": ["Ball kesmaydigan eslatmalar"],
+  "umumiy_izoh": "2-4 jumlalik umumiy xulosa"
 }
 
-Muhim qoidalar:
-- "ball" qiymati faqat quyidagilardan biri bo'lishi mumkin: 2, 1.5, 1, 0.5, 0.
-- Agar biror bandda xato bo'lmasa (ball=2), "xatolar" massivini bo'sh qoldir yoki "Xatolik aniqlanmadi" deb yoz.
-- Har bir xato alohida qatorda, aniq va tushunarli qilib, tuzatish yo'li bilan yozilsin.
-- "ogohlantirishlar" bo'sh bo'lishi mumkin.
-- Tekshiruv CHUQUR bo'lishi shart — yuzaki, shoshma-shosharlik tahlildan qat'iy saqlan.
-- MUHIM: har bir "xatolar" elementini QISQA va LO'NDA yoz (taxminan 1-2 jumla, 30 so'zdan oshmasin) — chuqurlik so'z ko'pligida emas, aniqlikda. Bu javobning to'liq 12 band bilan tugashini kafolatlaydi. Javob HECH QACHON 12 banddan kam bilan tugamasligi kerak — agar joy tugab qolayotganday tuyulsa, oldingi bandlardagi xatolar sonini emas, qisqaligini oshir.`;
+- "ball": faqat 2, 1.5, 1, 0.5, 0.
+- Xato yo'q bo'lsa "Xatolik aniqlanmadi" deb yoz.
+- Har xato 30 so'zdan oshmasin. Javob HECH QACHON 12 banddan kam bo'lmasin.`;
 
 async function evaluateEssay(topic, essayText) {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -150,7 +104,7 @@ async function evaluateEssay(topic, essayText) {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_completion_tokens: 8000,
+      max_completion_tokens: 16000,
       reasoning_effort: 'high',
       response_format: { type: 'json_object' },
       messages: [
@@ -168,7 +122,10 @@ async function evaluateEssay(topic, essayText) {
   const data = await response.json();
   const choice = data.choices?.[0];
   const raw = choice?.message?.content;
-  if (!raw) throw new Error('OpenAI javobida matn topilmadi');
+  if (!raw) {
+    const reason = choice?.finish_reason || 'noma\'lum';
+    throw new Error(`OpenAI javobida matn topilmadi (finish_reason: ${reason}) — ehtimol reasoning tokenlar limitni to'ldirgan, max_completion_tokens oshirish kerak`);
+  }
 
   let parsed;
   try {
