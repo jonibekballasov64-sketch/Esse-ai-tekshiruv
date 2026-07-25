@@ -125,7 +125,12 @@ bot.action('finalize_confirm', async (ctx) => {
   let sentCount = 0;
   for (const sub of pending) {
     try {
-      for (const chunk of splitLongText(sub.resultText)) {
+      const personalHeader =
+        `Assalomu alaykum, <b>${escapeHtml(sub.fullName)}</b>!\n` +
+        `📌 Mavzu: ${escapeHtml(sub.topic)}\n\n` +
+        `Essangizning tahlili va natijasi quyida:\n\n`;
+      const fullMessage = personalHeader + sub.resultText;
+      for (const chunk of splitLongText(fullMessage)) {
         await bot.telegram.sendMessage(sub.userId, chunk, { parse_mode: 'HTML' });
       }
       sentCount++;
