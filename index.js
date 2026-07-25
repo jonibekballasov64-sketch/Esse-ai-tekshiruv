@@ -51,11 +51,22 @@ function wordCount(text) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
+// Ism-familiyaga o'xshagan matnni aniqlash (masalan "Aliyev Vali") — mavzu sifatida qabul qilinmasin
+function looksLikeName(text) {
+  const trimmed = text.trim();
+  const words = trimmed.split(/\s+/);
+  if (words.length < 1 || words.length > 3) return false;
+  // Har bir so'z bosh harf bilan boshlanishi, raqam/tinish belgisi bo'lmasligi kerak (ism-familiya uslubi)
+  const namePattern = /^[A-ZА-ЯЎҚҒҲЁ][a-zа-яўқғҳёʻ']*$/;
+  return words.every((w) => namePattern.test(w));
+}
+
 // Mavzu — qisqa, bitta xabar, ko'p xatboshili bo'lmasligi kerak (esse bilan adashtirmaslik uchun)
 function looksLikeTopic(text) {
   const wc = wordCount(text);
   const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length;
-  return wc >= 2 && wc <= 40 && paragraphs <= 1;
+  if (looksLikeName(text)) return false;
+  return wc >= 3 && wc <= 40 && paragraphs <= 1;
 }
 
 // Esse — rasmiy mezonga ko'ra kamida 100 so'zdan iborat bo'lishi shart
@@ -73,7 +84,7 @@ bot.start(async (ctx) => {
 
   if (store.hasSubmittedToday(ctx.from.id)) {
     return ctx.reply(
-      "✅ Siz bugun allaqachon esse yubordingiz.\n\nKuniga faqat 1 ta esse qabul qilinadi. Ertaga qayta urinib ko'ring.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
+      "✅ Siz esse yubordingiz, qabul qilindi.\n\n📊 Natijasini kuting — Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
     );
   }
 
@@ -213,7 +224,7 @@ bot.on('text', async (ctx) => {
   if (session.state === 'awaiting_topic') {
     if (!looksLikeTopic(text)) {
       return ctx.reply(
-        "⚠️ Bu mavzu ko'rinishida emas (juda uzun yoki esse matniga o'xshaydi).\n\nIltimos, FAQAT mavzuni qisqa va aniq, bitta xabar qilib yuboring."
+        "⚠️ Bu mavzu ko'rinishida emas (ism-familiyaga, juda qisqa yoki juda uzun matnga o'xshaydi).\n\nIltimos, FAQAT esse mavzusini to'liq va aniq, bitta xabar qilib yuboring (masalan: \"Zamonaviy texnologiyalarning ta'lim jarayoniga ta'siri\")."
       );
     }
     session.topic = text;
@@ -232,7 +243,7 @@ bot.on('text', async (ctx) => {
 
     if (store.hasSubmittedToday(userId)) {
       sessions.delete(userId);
-      return ctx.reply("Siz bugun allaqachon esse yubordingiz. Ertaga qayta urinib ko'ring.");
+      return ctx.reply("✅ Siz esse yubordingiz, qabul qilindi. Natijasini kuting.");
     }
 
     const essayText = text;
