@@ -43,13 +43,29 @@ function addSubmission(sub) {
   save();
 }
 
+function updateSubmission(id, updates) {
+  const idx = submissions.findIndex((s) => s.id === id);
+  if (idx === -1) return null;
+  submissions[idx] = { ...submissions[idx], ...updates };
+  save();
+  return submissions[idx];
+}
+
+function getSubmission(id) {
+  return submissions.find((s) => s.id === id) || null;
+}
+
+function getFailedOrPendingToday() {
+  return getTodaysSubmissions().filter((s) => s.status === 'failed' || s.status === 'pending');
+}
+
 function getTodaysSubmissions() {
   const today = todayStr();
   return submissions.filter((s) => s.date === today);
 }
 
 function getUnfinalizedTodaySubmissions() {
-  return getTodaysSubmissions().filter((s) => !s.finalized);
+  return getTodaysSubmissions().filter((s) => !s.finalized && s.status === 'evaluated');
 }
 
 function markFinalized(ids) {
@@ -64,7 +80,10 @@ module.exports = {
   todayStr,
   hasSubmittedToday,
   addSubmission,
+  updateSubmission,
+  getSubmission,
   getTodaysSubmissions,
   getUnfinalizedTodaySubmissions,
+  getFailedOrPendingToday,
   markFinalized,
 };
