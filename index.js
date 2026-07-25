@@ -1,6 +1,9 @@
-const { Telegraf } = require('telegraf');
+const crypto = require('crypto');
+const { Telegraf, Markup } = require('telegraf');
 const { evaluateEssay } = require('./claude');
 const { formatEvaluation, escapeHtml, splitLongText } = require('./format');
+const store = require('./store');
+const { buildExcelReport } = require('./report');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const GROUP_ID = process.env.GROUP_ID;
@@ -16,13 +19,17 @@ const bot = new Telegraf(BOT_TOKEN);
 // Bot FAQAT shaxsiy (private) chatda ishlaydi — guruhda yozilgan xabarlarga umuman javob bermaydi
 bot.use((ctx, next) => {
   if (ctx.chat && ctx.chat.type !== 'private') {
-    return; // guruh/kanal xabarlarini e'tiborsiz qoldiramiz
+    return;
   }
   return next();
 });
 
 // Foydalanuvchi holati: userId -> { state: 'awaiting_topic'|'awaiting_essay', topic }
 const sessions = new Map();
+
+function isAdmin(ctx) {
+  return String(ctx.from.id) === String(ADMIN_ID);
+}
 
 async function isGroupMember(ctx) {
   try {
@@ -40,6 +47,22 @@ function getUserLabel(from) {
   return username ? `${fullName} (${username})` : fullName || `ID:${from.id}`;
 }
 
+function wordCount(text) {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
+// Mavzu — qisqa, bitta xabar, ko'p xatboshili bo'lmasligi kerak (esse bilan adashtirmaslik uchun)
+function looksLikeTopic(text) {
+  const wc = wordCount(text);
+  const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length;
+  return wc >= 2 && wc <= 40 && paragraphs <= 1;
+}
+
+// Esse — rasmiy mezonga ko'ra kamida 100 so'zdan iborat bo'lishi shart
+function looksLikeEssay(text) {
+  return wordCount(text) >= 100;
+}
+
 bot.start(async (ctx) => {
   const member = await isGroupMember(ctx);
   if (!member) {
@@ -47,9 +70,16 @@ bot.start(async (ctx) => {
       "❌ Kechirasiz, siz guruh a'zosi emassiz.\n\nXizmatdan foydalanish uchun avval tegishli guruhga a'zo bo'ling."
     );
   }
+
+  if (store.hasSubmittedToday(ctx.from.id)) {
+    return ctx.reply(
+      "✅ Siz bugun allaqachon esse yubordingiz.\n\nKuniga faqat 1 ta esse qabul qilinadi. Ertaga qayta urinib ko'ring.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
+    );
+  }
+
   sessions.set(ctx.from.id, { state: 'awaiting_topic' });
   return ctx.reply(
-    "✅ Xush kelibsiz!\n\n📌 Esse mavzusini kiriting (matn qilib yuboring):"
+    "✅ Xush kelibsiz!\n\n📌 Esse mavzusini kiriting (qisqa, bitta xabar qilib yuboring):"
   );
 });
 
@@ -57,6 +87,69 @@ bot.command('bekor', (ctx) => {
   sessions.delete(ctx.from.id);
   ctx.reply("Bekor qilindi. Qaytadan boshlash uchun /start bosing.");
 });
+
+// ============ ADMIN: Qabulni yakunlash ============
+
+bot.command('yakunlash', async (ctx) => {
+  if (!isAdmin(ctx)) return;
+  const pending = store.getUnfinalizedTodaySubmissions();
+  if (pending.length === 0) {
+    return ctx.reply('Bugun hali hech kim esse topshirmagan, yoki hammasi allaqachon yakunlangan.');
+  }
+  return ctx.reply(
+    `Bugun ${pending.length} ta esse topshirilgan.\n\nBarchasining natijasini talabgorlarga yuborib, umumiy hisobotni tayyorlaymi?`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback('✅ Ha, yakunlash', 'finalize_confirm')],
+      [Markup.button.callback('❌ Bekor qilish', 'finalize_cancel')],
+    ])
+  );
+});
+
+bot.action('finalize_cancel', async (ctx) => {
+  await ctx.answerCbQuery();
+  if (!isAdmin(ctx)) return;
+  await ctx.editMessageText('Bekor qilindi.');
+});
+
+bot.action('finalize_confirm', async (ctx) => {
+  await ctx.answerCbQuery();
+  if (!isAdmin(ctx)) return;
+
+  const pending = store.getUnfinalizedTodaySubmissions();
+  if (pending.length === 0) {
+    return ctx.editMessageText('Yuborish uchun natija topilmadi.');
+  }
+
+  await ctx.editMessageText(`⏳ ${pending.length} ta natija talabgorlarga yuborilmoqda...`);
+
+  let sentCount = 0;
+  for (const sub of pending) {
+    try {
+      for (const chunk of splitLongText(sub.resultText)) {
+        await bot.telegram.sendMessage(sub.userId, chunk, { parse_mode: 'HTML' });
+      }
+      sentCount++;
+    } catch (e) {
+      console.error(`Foydalanuvchi ${sub.userId} ga yuborishda xato:`, e.message);
+    }
+  }
+
+  try {
+    const buffer = await buildExcelReport(pending);
+    store.markFinalized(pending.map((s) => s.id));
+    await bot.telegram.sendDocument(
+      ADMIN_ID,
+      { source: buffer, filename: `hisobot-${store.todayStr()}.xlsx` },
+      { caption: `📊 ${pending.length} ta esse bo'yicha hisobot` }
+    );
+    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi va hisobot fayli tayyor.`);
+  } catch (e) {
+    console.error('Hisobot yaratishda xato:', e.message);
+    await ctx.reply(`⚠️ Natijalar yuborildi (${sentCount}/${pending.length}), lekin hisobot faylini yaratishda xato: ${e.message}`);
+  }
+});
+
+// ============ ASOSIY OQIM ============
 
 bot.on('text', async (ctx) => {
   const text = ctx.message.text;
@@ -76,40 +169,66 @@ bot.on('text', async (ctx) => {
   }
 
   if (session.state === 'awaiting_topic') {
+    if (!looksLikeTopic(text)) {
+      return ctx.reply(
+        "⚠️ Bu mavzu ko'rinishida emas (juda uzun yoki esse matniga o'xshaydi).\n\nIltimos, FAQAT mavzuni qisqa va aniq, bitta xabar qilib yuboring."
+      );
+    }
     session.topic = text;
     session.state = 'awaiting_essay';
     return ctx.reply(
-      `📌 Mavzu qabul qilindi:\n"${text}"\n\n📝 Endi shu mavzuda yozilgan essening to'liq matnini yuboring:`
+      `📌 Mavzu qabul qilindi:\n"${text}"\n\n📝 Endi shu mavzuda yozilgan essening to'liq matnini yuboring (kamida 100 so'z):`
     );
   }
 
   if (session.state === 'awaiting_essay') {
+    if (!looksLikeEssay(text)) {
+      return ctx.reply(
+        "⚠️ Bu esse uchun juda qisqa ko'rinadi (esse kamida 100 so'zdan iborat bo'lishi kerak).\n\nIltimos, to'liq esse matnini yuboring."
+      );
+    }
+
+    if (store.hasSubmittedToday(userId)) {
+      sessions.delete(userId);
+      return ctx.reply("Siz bugun allaqachon esse yubordingiz. Ertaga qayta urinib ko'ring.");
+    }
+
     const essayText = text;
     const topic = session.topic;
-    sessions.set(userId, { state: 'awaiting_topic' });
+    sessions.delete(userId); // Bugungi limit tugadi — o'zgartirish/qayta yuborish qabul qilinmaydi
 
-    const waitMsg = await ctx.reply('⏳ Tekshirilmoqda... Iltimos, kuting.');
+    await ctx.reply(
+      "✅ Essangiz qabul qilindi.\n\n⚠️ Diqqat: bundan keyin o'zgartirish yoki tuzatish kiritib bo'lmaydi.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
+    );
 
     try {
       const evaluation = await evaluateEssay(topic, essayText);
       const { text: resultText, total, total75 } = formatEvaluation(evaluation);
-
-      await ctx.telegram.deleteMessage(ctx.chat.id, waitMsg.message_id).catch(() => {});
-
-      for (const chunk of splitLongText(resultText)) {
-        await ctx.reply(chunk, { parse_mode: 'HTML' });
-      }
-
-      await ctx.reply(
-        "Yangi esse yuborish uchun mavzuni kiriting, yoki /start bosing."
-      );
-
       const userLabel = getUserLabel(ctx.from);
+      const fullName = [ctx.from.first_name, ctx.from.last_name].filter(Boolean).join(' ') || 'Nomsiz';
+
+      const submission = {
+        id: crypto.randomUUID(),
+        userId,
+        fullName,
+        username: ctx.from.username ? `@${ctx.from.username}` : null,
+        topic,
+        essayText,
+        resultText,
+        total,
+        total75,
+        date: store.todayStr(),
+        submittedAt: new Date().toISOString(),
+        finalized: false,
+      };
+      store.addSubmission(submission);
+
+      // Faqat adminga (Nargizaga) darhol yuboriladi — talabgorga hozircha yubormaymiz
       const header =
+        `🆕 <b>Yangi esse topshirildi</b>\n` +
         `👤 <b>Foydalanuvchi:</b> ${escapeHtml(userLabel)} (ID: ${userId})\n` +
         `📌 <b>Mavzu:</b> ${escapeHtml(topic)}\n` +
         `📊 <b>Natija:</b> ${total} / 24 → <b>${total75} / 75</b>`;
-
       await bot.telegram.sendMessage(ADMIN_ID, header, { parse_mode: 'HTML' });
 
       const essayMsg = `📝 <b>Esse matni</b> (${escapeHtml(userLabel)}):\n\n${escapeHtml(essayText)}`;
@@ -122,9 +241,6 @@ bot.on('text', async (ctx) => {
       }
     } catch (err) {
       console.error('Baholashda xato:', err);
-      await ctx.telegram
-        .editMessageText(ctx.chat.id, waitMsg.message_id, undefined, '❌ Tekshirishda xatolik yuz berdi. Iltimos, /start bosib qayta urinib ko\'ring.')
-        .catch(() => ctx.reply('❌ Tekshirishda xatolik yuz berdi. Iltimos, /start bosib qayta urinib ko\'ring.'));
       await bot.telegram
         .sendMessage(ADMIN_ID, `⚠️ Xatolik (foydalanuvchi ${userId}): ${err.message}`)
         .catch(() => {});
