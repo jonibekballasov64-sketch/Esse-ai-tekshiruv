@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, 'data');
+// Railway'da /data volume ulangan bo'lsa shundan foydalanamiz (doimiy saqlash).
+// Volume mavjud bo'lmasa (masalan lokal test paytida), konteyner ichidagi data/ papkasiga tushadi.
+const DATA_DIR = fs.existsSync('/data') ? '/data' : path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'submissions.json');
 
 function ensureDataDir() {
