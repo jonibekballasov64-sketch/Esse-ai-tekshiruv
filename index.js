@@ -56,7 +56,6 @@ function looksLikeName(text) {
   const trimmed = text.trim();
   const words = trimmed.split(/\s+/);
   if (words.length < 1 || words.length > 3) return false;
-  // Har bir so'z bosh harf bilan boshlanishi, raqam/tinish belgisi bo'lmasligi kerak (ism-familiya uslubi)
   const namePattern = /^[A-ZА-ЯЎҚҒҲЁ][a-zа-яўқғҳёʻ']*$/;
   return words.every((w) => namePattern.test(w));
 }
@@ -90,7 +89,8 @@ bot.start(async (ctx) => {
 
   sessions.set(ctx.from.id, { state: 'awaiting_topic' });
   return ctx.reply(
-    "✅ Xush kelibsiz!\n\n📌 Esse mavzusini kiriting (qisqa, bitta xabar qilib yuboring):"
+    "✅ Xush kelibsiz!\n\n📌 <b>ESSE MAVZUSINI kiriting.</b>\n\n<i>Faqat mavzuni yuboring — esse matnini emas.</i> Qisqa, aniq, bitta xabar qilib yozing.",
+    { parse_mode: 'HTML' }
   );
 });
 
@@ -224,20 +224,23 @@ bot.on('text', async (ctx) => {
   if (session.state === 'awaiting_topic') {
     if (!looksLikeTopic(text)) {
       return ctx.reply(
-        "⚠️ Bu mavzu ko'rinishida emas (ism-familiyaga, juda qisqa yoki juda uzun matnga o'xshaydi).\n\nIltimos, FAQAT esse mavzusini to'liq va aniq, bitta xabar qilib yuboring (masalan: \"Zamonaviy texnologiyalarning ta'lim jarayoniga ta'siri\")."
+        "⚠️ Bu <b>mavzu</b> ko'rinishida emas (ism-familiyaga, esse matniga, juda qisqa yoki juda uzun matnga o'xshaydi).\n\n<b>Iltimos, FAQAT esse mavzusini yuboring</b> — esse matnini emas. Masalan: <i>\"Zamonaviy texnologiyalarning ta'lim jarayoniga ta'siri\"</i>",
+        { parse_mode: 'HTML' }
       );
     }
     session.topic = text;
     session.state = 'awaiting_essay';
     return ctx.reply(
-      `📌 Mavzu qabul qilindi:\n"${text}"\n\n📝 Endi shu mavzuda yozilgan essening to'liq matnini yuboring (kamida 100 so'z):`
+      `📌 Mavzu qabul qilindi:\n"${escapeHtml(text)}"\n\n📝 <b>Endi ESSENING TO'LIQ MATNINI yuboring.</b>\n\n<i>Matningizni boshidan oxirigacha, BITTA xabarda yuboring</i> (kamida 100 so'z).\n\n⚠️ <b>D I Q Q A T</b>\nFaqat bitta esse qabul qilinadi. Yuborgach, tahrirlash yoki tuzatish mumkin emas. Shuning uchun avval o'zingiz qayta o'qib, to'g'ri ekanligiga ishonch hosil qilib, so'ng yuboring.`,
+      { parse_mode: 'HTML' }
     );
   }
 
   if (session.state === 'awaiting_essay') {
     if (!looksLikeEssay(text)) {
       return ctx.reply(
-        "⚠️ Bu esse uchun juda qisqa ko'rinadi (esse kamida 100 so'zdan iborat bo'lishi kerak).\n\nIltimos, to'liq esse matnini yuboring."
+        "⚠️ Bu <b>esse</b> uchun juda qisqa ko'rinadi (kamida 100 so'zdan iborat bo'lishi kerak).\n\n<b>Iltimos, to'liq esse matnini, bitta xabarda yuboring.</b>",
+        { parse_mode: 'HTML' }
       );
     }
 
@@ -273,7 +276,8 @@ bot.on('text', async (ctx) => {
     store.addSubmission(submission);
 
     await ctx.reply(
-      "✅ Essangiz qabul qilindi.\n\n⚠️ Diqqat: bundan keyin o'zgartirish yoki tuzatish kiritib bo'lmaydi.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
+      "✅ <b>Essangiz qabul qilindi.</b>\n\n⚠️ Diqqat: bundan keyin o'zgartirish yoki tuzatish kiritib bo'lmaydi.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi.",
+      { parse_mode: 'HTML' }
     );
 
     await runEvaluation(submission.id, topic, essayText, userLabel);
