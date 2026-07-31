@@ -81,7 +81,7 @@ bot.start(async (ctx) => {
     );
   }
 
-  if (store.hasSubmittedToday(ctx.from.id)) {
+  if (!isAdmin(ctx) && store.hasSubmittedToday(ctx.from.id)) {
     return ctx.reply(
       "✅ Siz esse yubordingiz, qabul qilindi.\n\n📊 Natijasini kuting — Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi."
     );
@@ -244,7 +244,7 @@ bot.on('text', async (ctx) => {
       );
     }
 
-    if (store.hasSubmittedToday(userId)) {
+    if (!isAdmin(ctx) && store.hasSubmittedToday(userId)) {
       sessions.delete(userId);
       return ctx.reply("✅ Siz esse yubordingiz, qabul qilindi. Natijasini kuting.");
     }
