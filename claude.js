@@ -162,7 +162,7 @@ async function callOpenAI(topic, essayText) {
     body: JSON.stringify({
       model: MODEL,
       max_completion_tokens: 16000,
-      reasoning_effort: 'high',
+      reasoning_effort: 'medium',
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
