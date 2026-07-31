@@ -11,6 +11,19 @@ function formatBall(n) {
   return Number.isInteger(n) ? String(n) : String(n);
 }
 
+// Xato matnini "[tavsif] — to'g'risi: [tuzatish]" shaklidan ajratib,
+// tavsifni QALIN, tuzatishni QIYA qilib chiqaradi — o'qish uchun aniqroq bo'lsin
+function formatXatoLine(rawText) {
+  const escaped = escapeHtml(rawText);
+  const match = escaped.match(/^(.*?)[\s]*[—–-][\s]*(to['’‘]g['’‘]risi\s*:.*)$/i);
+  if (match) {
+    const errorPart = match[1].trim();
+    const correctionPart = match[2].trim();
+    return `<b>${errorPart}</b> — <i>${correctionPart}</i>`;
+  }
+  return `<b>${escaped}</b>`;
+}
+
 function formatEvaluation(evaluation) {
   let out = '';
   let total = 0;
@@ -23,7 +36,7 @@ function formatEvaluation(evaluation) {
     out += `⚠️ Tahlil:\n`;
     const xatolar = band.xatolar && band.xatolar.length > 0 ? band.xatolar : ['Xatolik aniqlanmadi'];
     for (const x of xatolar) {
-      out += `— ${escapeHtml(x)}\n`;
+      out += `— ${formatXatoLine(x)}\n`;
     }
     out += `\n`;
   }
@@ -33,6 +46,13 @@ function formatEvaluation(evaluation) {
   out += `📊 <b>Yakuniy natija:</b>\n`;
   out += `24 ballik tizimda: <b>${formatBall(Math.round(total * 10) / 10)} / 24</b>\n`;
   out += `75 ballik tizimda: <b>${total75} ball</b>\n`;
+
+  if (evaluation.ogohlantirishlar && evaluation.ogohlantirishlar.length > 0) {
+    out += `\n🔔 <b>Ogohlantirish (ball kesilmagan, faqat eslatma):</b>\n`;
+    for (const o of evaluation.ogohlantirishlar) {
+      out += `— ${escapeHtml(o)}\n`;
+    }
+  }
 
   if (evaluation.umumiy_izoh) {
     out += `\n💬 ${escapeHtml(evaluation.umumiy_izoh)}`;
