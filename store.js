@@ -57,10 +57,6 @@ function getSubmission(id) {
   return submissions.find((s) => s.id === id) || null;
 }
 
-function getFailedOrPendingToday() {
-  return getTodaysSubmissions().filter((s) => s.status === 'failed' || s.status === 'pending');
-}
-
 function getTodaysSubmissions() {
   const today = todayStr();
   return submissions.filter((s) => s.date === today);
@@ -68,6 +64,21 @@ function getTodaysSubmissions() {
 
 function getUnfinalizedTodaySubmissions() {
   return getTodaysSubmissions().filter((s) => !s.finalized && s.status === 'evaluated');
+}
+
+function getFailedOrPendingToday() {
+  return getTodaysSubmissions().filter((s) => s.status === 'failed' || s.status === 'pending');
+}
+
+// Sanadan qat'i nazar — hali yakunlanmagan BARCHA esselar
+// (yarim tun o'tib, sana o'zgargan holatlar uchun — /yakunlash shuni ishlatadi)
+function getAllUnfinalizedSubmissions() {
+  return submissions.filter((s) => !s.finalized && s.status === 'evaluated');
+}
+
+// Sanadan qat'i nazar — xato/kutilayotgan BARCHA esselar
+function getAllFailedOrPending() {
+  return submissions.filter((s) => s.status === 'failed' || s.status === 'pending');
 }
 
 function markFinalized(ids) {
@@ -87,5 +98,7 @@ module.exports = {
   getTodaysSubmissions,
   getUnfinalizedTodaySubmissions,
   getFailedOrPendingToday,
+  getAllUnfinalizedSubmissions,
+  getAllFailedOrPending,
   markFinalized,
 };
