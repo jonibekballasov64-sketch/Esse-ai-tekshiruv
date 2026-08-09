@@ -100,15 +100,17 @@ bot.command('bekor', (ctx) => {
 });
 
 // ============ ADMIN: Qabulni yakunlash ============
+// MUHIM: sanadan qat'i nazar barcha yakunlanmagan esselarni oladi
+// (yarim tun o'tib ketgan, kechagi esselar ham shu bilan qamrab olinadi)
 
 bot.command('yakunlash', async (ctx) => {
   if (!isAdmin(ctx)) return;
-  const pending = store.getUnfinalizedTodaySubmissions();
+  const pending = store.getAllUnfinalizedSubmissions();
   if (pending.length === 0) {
-    return ctx.reply('Bugun hali hech kim esse topshirmagan, yoki hammasi allaqachon yakunlangan.');
+    return ctx.reply('Hozircha yakunlanmagan esse yo\'q — hammasi allaqachon yakunlangan yoki hech kim topshirmagan.');
   }
   return ctx.reply(
-    `Bugun ${pending.length} ta esse muvaffaqiyatli baholangan.\n\nBarchasining natijasini talabgorlarga yuborib, umumiy hisobotni tayyorlaymi?`,
+    `${pending.length} ta esse muvaffaqiyatli baholangan va yakunlashni kutmoqda.\n\nBarchasining natijasini talabgorlarga yuborib, umumiy hisobotni tayyorlaymi?`,
     Markup.inlineKeyboard([
       [Markup.button.callback('✅ Ha, yakunlash', 'finalize_confirm')],
       [Markup.button.callback('❌ Bekor qilish', 'finalize_cancel')],
@@ -126,7 +128,7 @@ bot.action('finalize_confirm', async (ctx) => {
   await ctx.answerCbQuery();
   if (!isAdmin(ctx)) return;
 
-  const pending = store.getUnfinalizedTodaySubmissions();
+  const pending = store.getAllUnfinalizedSubmissions();
   if (pending.length === 0) {
     return ctx.editMessageText('Yuborish uchun natija topilmadi.');
   }
@@ -166,6 +168,7 @@ bot.action('finalize_confirm', async (ctx) => {
 });
 
 // ============ ADMIN: xato/kutilayotgan esselarni ko'rish va qayta urinish ============
+// MUHIM: bu ham sanadan qat'i nazar BARCHA xato/kutilayotgan esselarni ko'rsatadi
 
 bot.action(/^retry_(.+)$/, async (ctx) => {
   await ctx.answerCbQuery();
@@ -185,9 +188,9 @@ bot.action(/^retry_(.+)$/, async (ctx) => {
 
 bot.command('xatolar', async (ctx) => {
   if (!isAdmin(ctx)) return;
-  const stuck = store.getFailedOrPendingToday();
+  const stuck = store.getAllFailedOrPending();
   if (stuck.length === 0) {
-    return ctx.reply('✅ Bugun xato/kutilayotgan esse yo\'q — hammasi baholangan.');
+    return ctx.reply('✅ Xato/kutilayotgan esse yo\'q — hammasi baholangan.');
   }
   for (const sub of stuck) {
     const label = sub.username ? `${sub.fullName} (${sub.username})` : sub.fullName;
