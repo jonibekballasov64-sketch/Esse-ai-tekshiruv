@@ -16,7 +16,6 @@ if (!BOT_TOKEN || !GROUP_ID || !ADMIN_ID) {
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// Bot FAQAT shaxsiy (private) chatda ishlaydi — guruhda yozilgan xabarlarga umuman javob bermaydi
 bot.use((ctx, next) => {
   if (ctx.chat && ctx.chat.type !== 'private') {
     return;
@@ -24,7 +23,6 @@ bot.use((ctx, next) => {
   return next();
 });
 
-// Foydalanuvchi holati: userId -> { state: 'awaiting_topic'|'awaiting_essay', topic }
 const sessions = new Map();
 
 function isAdmin(ctx) {
@@ -51,7 +49,6 @@ function wordCount(text) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
-// Ism-familiyaga o'xshagan matnni aniqlash (masalan "Aliyev Vali") — mavzu sifatida qabul qilinmasin
 function looksLikeName(text) {
   const trimmed = text.trim();
   const words = trimmed.split(/\s+/);
@@ -60,7 +57,6 @@ function looksLikeName(text) {
   return words.every((w) => namePattern.test(w));
 }
 
-// Mavzu — qisqa, bitta xabar, ko'p xatboshili bo'lmasligi kerak (esse bilan adashtirmaslik uchun)
 function looksLikeTopic(text) {
   const wc = wordCount(text);
   const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length;
@@ -68,9 +64,36 @@ function looksLikeTopic(text) {
   return wc >= 3 && wc <= 40 && paragraphs <= 1;
 }
 
-// Esse — rasmiy mezonga ko'ra kamida 100 so'zdan iborat bo'lishi shart
 function looksLikeEssay(text) {
   return wordCount(text) >= 100;
+}
+
+// ============ Guruhga xabar havolasini yasash ============
+
+let groupChatInfoCache = null;
+async function getGroupChatInfo() {
+  if (!groupChatInfoCache) {
+    try {
+      groupChatInfoCache = await bot.telegram.getChat(GROUP_ID);
+    } catch (e) {
+      console.error('Guruh ma\'lumotini olishda xato:', e.message);
+      groupChatInfoCache = {};
+    }
+  }
+  return groupChatInfoCache;
+}
+
+async function buildGroupMessageLink(messageId) {
+  const chatInfo = await getGroupChatInfo();
+  if (chatInfo.username) {
+    return `https://t.me/${chatInfo.username}/${messageId}`;
+  }
+  const idStr = String(GROUP_ID);
+  if (idStr.startsWith('-100')) {
+    const internalId = idStr.slice(4);
+    return `https://t.me/c/${internalId}/${messageId}`;
+  }
+  return null;
 }
 
 bot.start(async (ctx) => {
@@ -100,8 +123,6 @@ bot.command('bekor', (ctx) => {
 });
 
 // ============ ADMIN: Qabulni yakunlash ============
-// MUHIM: sanadan qat'i nazar barcha yakunlanmagan esselarni oladi
-// (yarim tun o'tib ketgan, kechagi esselar ham shu bilan qamrab olinadi)
 
 bot.command('yakunlash', async (ctx) => {
   if (!isAdmin(ctx)) return;
@@ -110,7 +131,7 @@ bot.command('yakunlash', async (ctx) => {
     return ctx.reply('Hozircha yakunlanmagan esse yo\'q — hammasi allaqachon yakunlangan yoki hech kim topshirmagan.');
   }
   return ctx.reply(
-    `${pending.length} ta esse muvaffaqiyatli baholangan va yakunlashni kutmoqda.\n\nBarchasining natijasini talabgorlarga yuborib, umumiy hisobotni tayyorlaymi?`,
+    `${pending.length} ta esse muvaffaqiyatli baholangan va yakunlashni kutmoqda.\n\nBarchasining natijasini talabgorlarga yuboraman, GURUHGA e'lon qilaman, TOP-3 reyting chiqaraman va hisobot tayyorlayman. Davom etaymi?`,
     Markup.inlineKeyboard([
       [Markup.button.callback('✅ Ha, yakunlash', 'finalize_confirm')],
       [Markup.button.callback('❌ Bekor qilish', 'finalize_cancel')],
@@ -133,8 +154,9 @@ bot.action('finalize_confirm', async (ctx) => {
     return ctx.editMessageText('Yuborish uchun natija topilmadi.');
   }
 
-  await ctx.editMessageText(`⏳ ${pending.length} ta natija talabgorlarga yuborilmoqda...`);
+  await ctx.editMessageText(`⏳ ${pending.length} ta natija qayta ishlanmoqda...`);
 
+  // 1) Har biriga shaxsiy natija yuborish
   let sentCount = 0;
   for (const sub of pending) {
     try {
@@ -152,6 +174,66 @@ bot.action('finalize_confirm', async (ctx) => {
     }
   }
 
+  // 2) Har birini GURUHGA e'lon qilish (ism-familiya + esse matni + tahlil), orada ➡️➡️➡️ ajratgich
+  const groupLinks = {}; // submissionId -> link
+  for (const sub of pending) {
+    try {
+      const groupHeader =
+        `👤 <b>${escapeHtml(sub.fullName)}</b>\n` +
+        `📌 Mavzu: ${escapeHtml(sub.topic)}\n` +
+        `📊 Natija: <b>${sub.total} / 24 → ${sub.total75} / 75</b>\n\n` +
+        `📝 <b>Esse matni:</b>\n\n${escapeHtml(sub.essayText)}`;
+
+      let firstMessageId = null;
+      for (const chunk of splitLongText(groupHeader)) {
+        const sentMsg = await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML' });
+        if (!firstMessageId) firstMessageId = sentMsg.message_id;
+      }
+
+      for (const chunk of splitLongText(sub.resultText)) {
+        await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML' });
+      }
+
+      if (firstMessageId) {
+        const link = await buildGroupMessageLink(firstMessageId);
+        if (link) groupLinks[sub.id] = link;
+      }
+
+      await bot.telegram.sendMessage(GROUP_ID, '➡️➡️➡️');
+    } catch (e) {
+      console.error(`Guruhga yuborishda xato (esse ${sub.id}):`, e.message);
+    }
+  }
+
+  // 3) TOP-3 reyting (teng ball bo'lsa, hammasi shu o'ringa kiradi)
+  try {
+    const sorted = [...pending].sort((a, b) => b.total75 - a.total75);
+    const distinctScores = [...new Set(sorted.map((s) => s.total75))].slice(0, 3);
+    const medals = ['🥇', '🥈', '🥉'];
+    const rankLabels = ['1-o\'rin', '2-o\'rin', '3-o\'rin'];
+
+    let leaderboardMsg = '🏆 <b>TOP-3 NATIJALAR</b>\n\n';
+    distinctScores.forEach((score, idx) => {
+      const people = sorted.filter((s) => s.total75 === score);
+      leaderboardMsg += `${medals[idx]} <b>${rankLabels[idx]} — ${score} ball</b>\n`;
+      people.forEach((p) => {
+        leaderboardMsg += `👤 ${escapeHtml(p.fullName)}\n`;
+        const link = groupLinks[p.id];
+        if (link) {
+          leaderboardMsg += `📝 <a href="${link}">Esseni o'qish</a>\n`;
+        }
+        leaderboardMsg += '\n';
+      });
+    });
+
+    for (const chunk of splitLongText(leaderboardMsg)) {
+      await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML', disable_web_page_preview: true });
+    }
+  } catch (e) {
+    console.error('TOP-3 reyting yuborishda xato:', e.message);
+  }
+
+  // 4) Excel hisobot + yakunlash
   try {
     const buffer = await buildExcelReport(pending);
     store.markFinalized(pending.map((s) => s.id));
@@ -160,7 +242,7 @@ bot.action('finalize_confirm', async (ctx) => {
       { source: buffer, filename: `hisobot-${store.todayStr()}.xlsx` },
       { caption: `📊 ${pending.length} ta esse bo'yicha hisobot` }
     );
-    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi va hisobot fayli tayyor.`);
+    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi, guruhga e'lon qilindi, TOP-3 chop etildi va hisobot fayli tayyor.`);
   } catch (e) {
     console.error('Hisobot yaratishda xato:', e.message);
     await ctx.reply(`⚠️ Natijalar yuborildi (${sentCount}/${pending.length}), lekin hisobot faylini yaratishda xato: ${e.message}`);
@@ -168,7 +250,6 @@ bot.action('finalize_confirm', async (ctx) => {
 });
 
 // ============ ADMIN: xato/kutilayotgan esselarni ko'rish va qayta urinish ============
-// MUHIM: bu ham sanadan qat'i nazar BARCHA xato/kutilayotgan esselarni ko'rsatadi
 
 bot.action(/^retry_(.+)$/, async (ctx) => {
   await ctx.answerCbQuery();
@@ -254,12 +335,11 @@ bot.on('text', async (ctx) => {
 
     const essayText = text;
     const topic = session.topic;
-    sessions.delete(userId); // Bugungi limit tugadi — o'zgartirish/qayta yuborish qabul qilinmaydi
+    sessions.delete(userId);
 
     const userLabel = getUserLabel(ctx.from);
     const fullName = [ctx.from.first_name, ctx.from.last_name].filter(Boolean).join(' ') || 'Nomsiz';
 
-    // Esse DARHOL saqlanadi (baholashdan oldin) — shu tufayli hech qanday holatda yo'qolmaydi
     const submission = {
       id: crypto.randomUUID(),
       userId,
@@ -267,7 +347,7 @@ bot.on('text', async (ctx) => {
       username: ctx.from.username ? `@${ctx.from.username}` : null,
       topic,
       essayText,
-      status: 'pending', // pending -> evaluated | failed
+      status: 'pending',
       resultText: null,
       total: null,
       total75: null,
