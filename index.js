@@ -68,6 +68,35 @@ function looksLikeEssay(text) {
   return wordCount(text) >= 100;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Guruhga xabar yuborishning "xavfsiz" varianti — flood-limit (Telegram cheklovi)
+// yuz bersa avtomatik kutib qayta uradi, va har xabardan keyin kichik pauza qo'yadi
+async function sendGroupMessageSafe(chatId, text, opts) {
+  const MAX_TRIES = 4;
+  for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
+    try {
+      const res = await bot.telegram.sendMessage(chatId, text, opts);
+      await sleep(700); // guruh flood-limitidan saqlanish uchun kichik pauza
+      return res;
+    } catch (e) {
+      const retryAfter = e?.response?.parameters?.retry_after || e?.parameters?.retry_after;
+      if (retryAfter) {
+        console.warn(`Flood control: ${retryAfter}s kutamiz...`);
+        await sleep((retryAfter + 1) * 1000);
+        continue;
+      }
+      if (attempt < MAX_TRIES) {
+        await sleep(1500 * attempt);
+        continue;
+      }
+      throw e;
+    }
+  }
+}
+
 // ============ Guruhga xabar havolasini yasash ============
 
 let groupChatInfoCache = null;
@@ -131,7 +160,7 @@ bot.command('yakunlash', async (ctx) => {
     return ctx.reply('Hozircha yakunlanmagan esse yo\'q — hammasi allaqachon yakunlangan yoki hech kim topshirmagan.');
   }
   return ctx.reply(
-    `${pending.length} ta esse muvaffaqiyatli baholangan va yakunlashni kutmoqda.\n\nBarchasining natijasini talabgorlarga yuboraman, GURUHGA e'lon qilaman, TOP-3 reyting chiqaraman va hisobot tayyorlayman. Davom etaymi?`,
+    `${pending.length} ta esse muvaffaqiyatli baholangan va yakunlashni kutmoqda.\n\nBarchasining natijasini talabgorlarga yuboraman, GURUHGA e'lon qilaman, TOP-3 reyting chiqaraman va hisobot tayyorlayman. Guruhga ${pending.length} ta esse yuborilishi vaqt olishi mumkin (flood-limitdan saqlanish uchun). Davom etaymi?`,
     Markup.inlineKeyboard([
       [Markup.button.callback('✅ Ha, yakunlash', 'finalize_confirm')],
       [Markup.button.callback('❌ Bekor qilish', 'finalize_cancel')],
@@ -154,7 +183,7 @@ bot.action('finalize_confirm', async (ctx) => {
     return ctx.editMessageText('Yuborish uchun natija topilmadi.');
   }
 
-  await ctx.editMessageText(`⏳ ${pending.length} ta natija qayta ishlanmoqda...`);
+  await ctx.editMessageText(`⏳ ${pending.length} ta natija qayta ishlanmoqda... Bu biroz vaqt olishi mumkin.`);
 
   // 1) Har biriga shaxsiy natija yuborish
   let sentCount = 0;
@@ -175,7 +204,9 @@ bot.action('finalize_confirm', async (ctx) => {
   }
 
   // 2) Har birini GURUHGA e'lon qilish (ism-familiya + esse matni + tahlil), orada ➡️➡️➡️ ajratgich
+  //    MUHIM: flood-limitdan saqlanish uchun sendGroupMessageSafe ishlatiladi, xato bo'lsa adminga xabar beriladi
   const groupLinks = {}; // submissionId -> link
+  const groupFailures = [];
   for (const sub of pending) {
     try {
       const groupHeader =
@@ -186,12 +217,12 @@ bot.action('finalize_confirm', async (ctx) => {
 
       let firstMessageId = null;
       for (const chunk of splitLongText(groupHeader)) {
-        const sentMsg = await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML' });
-        if (!firstMessageId) firstMessageId = sentMsg.message_id;
+        const sentMsg = await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML' });
+        if (!firstMessageId && sentMsg) firstMessageId = sentMsg.message_id;
       }
 
       for (const chunk of splitLongText(sub.resultText)) {
-        await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML' });
+        await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML' });
       }
 
       if (firstMessageId) {
@@ -199,10 +230,21 @@ bot.action('finalize_confirm', async (ctx) => {
         if (link) groupLinks[sub.id] = link;
       }
 
-      await bot.telegram.sendMessage(GROUP_ID, '➡️➡️➡️');
+      await sendGroupMessageSafe(GROUP_ID, '➡️➡️➡️');
     } catch (e) {
       console.error(`Guruhga yuborishda xato (esse ${sub.id}):`, e.message);
+      groupFailures.push(sub.fullName);
     }
+  }
+
+  if (groupFailures.length > 0) {
+    await bot.telegram
+      .sendMessage(
+        ADMIN_ID,
+        `⚠️ Quyidagi ${groupFailures.length} ta essening guruhga yuborilishida xato bo'ldi:\n${groupFailures.map((n) => `— ${escapeHtml(n)}`).join('\n')}`,
+        { parse_mode: 'HTML' }
+      )
+      .catch(() => {});
   }
 
   // 3) TOP-3 reyting (teng ball bo'lsa, hammasi shu o'ringa kiradi)
@@ -227,7 +269,7 @@ bot.action('finalize_confirm', async (ctx) => {
     });
 
     for (const chunk of splitLongText(leaderboardMsg)) {
-      await bot.telegram.sendMessage(GROUP_ID, chunk, { parse_mode: 'HTML', disable_web_page_preview: true });
+      await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML', disable_web_page_preview: true });
     }
   } catch (e) {
     console.error('TOP-3 reyting yuborishda xato:', e.message);
@@ -242,7 +284,8 @@ bot.action('finalize_confirm', async (ctx) => {
       { source: buffer, filename: `hisobot-${store.todayStr()}.xlsx` },
       { caption: `📊 ${pending.length} ta esse bo'yicha hisobot` }
     );
-    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi, guruhga e'lon qilindi, TOP-3 chop etildi va hisobot fayli tayyor.`);
+    const failNote = groupFailures.length > 0 ? `\n⚠️ ${groupFailures.length} ta esse guruhga yuborilmadi (yuqoridagi xabarga qarang).` : '';
+    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi, guruhga e'lon qilindi, TOP-3 chop etildi va hisobot fayli tayyor.${failNote}`);
   } catch (e) {
     console.error('Hisobot yaratishda xato:', e.message);
     await ctx.reply(`⚠️ Natijalar yuborildi (${sentCount}/${pending.length}), lekin hisobot faylini yaratishda xato: ${e.message}`);
