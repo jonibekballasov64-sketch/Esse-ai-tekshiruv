@@ -5,6 +5,7 @@ const path = require('path');
 // Volume mavjud bo'lmasa (masalan lokal test paytida), konteyner ichidagi data/ papkasiga tushadi.
 const DATA_DIR = fs.existsSync('/data') ? '/data' : path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'submissions.json');
+const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -26,6 +27,40 @@ let submissions = load();
 function save() {
   ensureDataDir();
   fs.writeFileSync(DATA_FILE, JSON.stringify(submissions, null, 2));
+}
+
+// ============ Joriy mavzu (admin tomonidan oldindan kiritiladi) ============
+
+function loadSettings() {
+  ensureDataDir();
+  if (!fs.existsSync(SETTINGS_FILE)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8'));
+  } catch (e) {
+    console.error('Settings faylini o\'qishda xato:', e.message);
+    return {};
+  }
+}
+
+let settings = loadSettings();
+
+function saveSettings() {
+  ensureDataDir();
+  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+}
+
+function getCurrentTopic() {
+  return settings.currentTopic || null;
+}
+
+function setCurrentTopic(topic) {
+  settings.currentTopic = topic;
+  saveSettings();
+}
+
+function clearCurrentTopic() {
+  settings.currentTopic = null;
+  saveSettings();
 }
 
 // Toshkent vaqti (UTC+5) bo'yicha bugungi sana, kunlik limitni to'g'ri hisoblash uchun
@@ -101,4 +136,7 @@ module.exports = {
   getAllUnfinalizedSubmissions,
   getAllFailedOrPending,
   markFinalized,
+  getCurrentTopic,
+  setCurrentTopic,
+  clearCurrentTopic,
 };

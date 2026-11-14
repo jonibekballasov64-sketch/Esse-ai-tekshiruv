@@ -139,6 +139,15 @@ bot.start(async (ctx) => {
     );
   }
 
+  const currentTopic = store.getCurrentTopic();
+  if (currentTopic) {
+    sessions.set(ctx.from.id, { state: 'awaiting_essay_or_topic', defaultTopic: currentTopic });
+    return ctx.reply(
+      `✅ Xush kelibsiz!\n\n📌 <b>Joriy mavzu:</b>\n"${escapeHtml(currentTopic)}"\n\n📝 <b>Shu mavzuda ESSENING TO'LIQ MATNINI yuboring</b> (bitta xabarda, kamida 100 so'z).\n\n<i>Agar boshqa mavzuda esse yozmoqchi bo'lsangiz, avval o'sha mavzuni (faqat mavzuni, qisqa qilib) yuboring — keyin esse matnini so'rayman.</i>`,
+      { parse_mode: 'HTML' }
+    );
+  }
+
   sessions.set(ctx.from.id, { state: 'awaiting_topic' });
   return ctx.reply(
     "✅ Xush kelibsiz!\n\n📌 <b>ESSE MAVZUSINI kiriting.</b>\n\n<i>Faqat mavzuni yuboring — esse matnini emas.</i> Qisqa, aniq, bitta xabar qilib yozing.",
@@ -149,6 +158,42 @@ bot.start(async (ctx) => {
 bot.command('bekor', (ctx) => {
   sessions.delete(ctx.from.id);
   ctx.reply("Bekor qilindi. Qaytadan boshlash uchun /start bosing.");
+});
+
+// ============ ADMIN: Joriy mavzuni o'rnatish ============
+// Admin oldindan mavzu kiritib qo'ysa, foydalanuvchilar /start bosganda
+// shu mavzuni ko'radi va to'g'ridan-to'g'ri esse yuborsa — shu mavzuda deb qabul qilinadi.
+// Agar foydalanuvchi o'zi boshqa mavzu yuborsa — o'sha o'z mavzusida davom etadi (eski tartib).
+
+bot.command('mavzu', async (ctx) => {
+  if (!isAdmin(ctx)) return;
+
+  const argText = ctx.message.text.replace(/^\/mavzu(@\S+)?\s*/, '').trim();
+  if (argText) {
+    store.setCurrentTopic(argText);
+    return ctx.reply(
+      `✅ Joriy mavzu o'rnatildi:\n"${escapeHtml(argText)}"\n\nEndi foydalanuvchilar /start bosganda shu mavzuni ko'radi. To'g'ridan-to'g'ri esse yuborishsa — shu mavzuda deb qabul qilinadi.\n\nO'chirish uchun: /mavzu_ochirish`,
+      { parse_mode: 'HTML' }
+    );
+  }
+
+  const current = store.getCurrentTopic();
+  sessions.set(ctx.from.id, { state: 'admin_awaiting_topic' });
+  const currentLine = current
+    ? `📌 Hozirgi joriy mavzu:\n"${escapeHtml(current)}"\n\n`
+    : "📌 Hozircha joriy mavzu o'rnatilmagan.\n\n";
+  return ctx.reply(
+    `${currentLine}Yangi joriy mavzuni matn ko'rinishida yuboring.\n\nBekor qilish uchun /bekor bosing.`,
+    { parse_mode: 'HTML' }
+  );
+});
+
+bot.command('mavzu_ochirish', async (ctx) => {
+  if (!isAdmin(ctx)) return;
+  store.clearCurrentTopic();
+  return ctx.reply(
+    "✅ Joriy mavzu o'chirildi. Endi har bir foydalanuvchi /start bosganda o'z mavzusini kiritishi kerak bo'ladi (avvalgi tartib)."
+  );
 });
 
 // ============ ADMIN: Qabulni yakunlash ============
@@ -329,6 +374,47 @@ bot.command('xatolar', async (ctx) => {
   }
 });
 
+// ============ Esseni qabul qilish (umumiy) ============
+
+async function submitEssayFlow(ctx, topic, essayText) {
+  const userId = ctx.from.id;
+
+  if (!isAdmin(ctx) && store.hasSubmittedToday(userId)) {
+    sessions.delete(userId);
+    return ctx.reply("✅ Siz esse yubordingiz, qabul qilindi. Natijasini kuting.");
+  }
+
+  sessions.delete(userId);
+
+  const userLabel = getUserLabel(ctx.from);
+  const fullName = [ctx.from.first_name, ctx.from.last_name].filter(Boolean).join(' ') || 'Nomsiz';
+
+  const submission = {
+    id: crypto.randomUUID(),
+    userId,
+    fullName,
+    username: ctx.from.username ? `@${ctx.from.username}` : null,
+    topic,
+    essayText,
+    status: 'pending',
+    resultText: null,
+    total: null,
+    total75: null,
+    errorMessage: null,
+    date: store.todayStr(),
+    submittedAt: new Date().toISOString(),
+    finalized: false,
+  };
+  store.addSubmission(submission);
+
+  await ctx.reply(
+    "✅ <b>Essangiz qabul qilindi.</b>\n\n⚠️ Diqqat: bundan keyin o'zgartirish yoki tuzatish kiritib bo'lmaydi.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi.",
+    { parse_mode: 'HTML' }
+  );
+
+  await runEvaluation(submission.id, topic, essayText, userLabel);
+}
+
 // ============ ASOSIY OQIM ============
 
 bot.on('text', async (ctx) => {
@@ -348,6 +434,20 @@ bot.on('text', async (ctx) => {
     return ctx.reply("❌ Siz hozir guruh a'zosi emassiz. Xizmatdan foydalana olmaysiz.");
   }
 
+  // Admin joriy mavzuni kiritmoqda
+  if (session.state === 'admin_awaiting_topic') {
+    if (!isAdmin(ctx)) {
+      sessions.delete(userId);
+      return;
+    }
+    store.setCurrentTopic(text);
+    sessions.delete(userId);
+    return ctx.reply(
+      `✅ Joriy mavzu o'rnatildi:\n"${escapeHtml(text)}"\n\nEndi foydalanuvchilar /start bosganda shu mavzuni ko'radi.`,
+      { parse_mode: 'HTML' }
+    );
+  }
+
   if (session.state === 'awaiting_topic') {
     if (!looksLikeTopic(text)) {
       return ctx.reply(
@@ -363,6 +463,27 @@ bot.on('text', async (ctx) => {
     );
   }
 
+  // Joriy mavzu oldindan o'rnatilgan holat: foydalanuvchi to'g'ridan-to'g'ri esse yuborsa —
+  // joriy mavzuda deb qabul qilinadi. O'zi boshqa mavzu yuborsa — o'sha mavzuda davom etadi.
+  if (session.state === 'awaiting_essay_or_topic') {
+    if (looksLikeEssay(text)) {
+      return submitEssayFlow(ctx, session.defaultTopic, text);
+    }
+    if (looksLikeTopic(text)) {
+      session.topic = text;
+      session.state = 'awaiting_essay';
+      delete session.defaultTopic;
+      return ctx.reply(
+        `📌 Mavzu qabul qilindi:\n"${escapeHtml(text)}"\n\n📝 <b>Endi ESSENING TO'LIQ MATNINI yuboring.</b>\n\n<i>Matningizni boshidan oxirigacha, BITTA xabarda yuboring</i> (kamida 100 so'z).\n\n⚠️ <b>D I Q Q A T</b>\nFaqat bitta esse qabul qilinadi. Yuborgach, tahrirlash yoki tuzatish mumkin emas. Shuning uchun avval o'zingiz qayta o'qib, to'g'ri ekanligiga ishonch hosil qilib, so'ng yuboring.`,
+        { parse_mode: 'HTML' }
+      );
+    }
+    return ctx.reply(
+      `⚠️ Bu xabar na <b>esse</b>ga, na <b>mavzu</b>ga o'xshamayapti.\n\n📌 Joriy mavzu: "${escapeHtml(session.defaultTopic)}"\n\nAgar shu mavzuda yozayotgan bo'lsangiz — <b>to'liq esse matnini</b> (kamida 100 so'z) yuboring.\nAgar boshqa mavzuda yozmoqchi bo'lsangiz — avval o'sha mavzuni (qisqa, bitta xabar) yuboring.`,
+      { parse_mode: 'HTML' }
+    );
+  }
+
   if (session.state === 'awaiting_essay') {
     if (!looksLikeEssay(text)) {
       return ctx.reply(
@@ -370,43 +491,7 @@ bot.on('text', async (ctx) => {
         { parse_mode: 'HTML' }
       );
     }
-
-    if (!isAdmin(ctx) && store.hasSubmittedToday(userId)) {
-      sessions.delete(userId);
-      return ctx.reply("✅ Siz esse yubordingiz, qabul qilindi. Natijasini kuting.");
-    }
-
-    const essayText = text;
-    const topic = session.topic;
-    sessions.delete(userId);
-
-    const userLabel = getUserLabel(ctx.from);
-    const fullName = [ctx.from.first_name, ctx.from.last_name].filter(Boolean).join(' ') || 'Nomsiz';
-
-    const submission = {
-      id: crypto.randomUUID(),
-      userId,
-      fullName,
-      username: ctx.from.username ? `@${ctx.from.username}` : null,
-      topic,
-      essayText,
-      status: 'pending',
-      resultText: null,
-      total: null,
-      total75: null,
-      errorMessage: null,
-      date: store.todayStr(),
-      submittedAt: new Date().toISOString(),
-      finalized: false,
-    };
-    store.addSubmission(submission);
-
-    await ctx.reply(
-      "✅ <b>Essangiz qabul qilindi.</b>\n\n⚠️ Diqqat: bundan keyin o'zgartirish yoki tuzatish kiritib bo'lmaydi.\n\n📊 Natijangiz Nargiza Olimovna barcha esselarni yakunlagach e'lon qilinadi.",
-      { parse_mode: 'HTML' }
-    );
-
-    await runEvaluation(submission.id, topic, essayText, userLabel);
+    return submitEssayFlow(ctx, session.topic, text);
   }
 });
 
