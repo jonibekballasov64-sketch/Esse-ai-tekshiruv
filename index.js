@@ -6,12 +6,17 @@ const store = require('./store');
 const { buildExcelReport } = require('./report');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const GROUP_ID = process.env.GROUP_ID;
+const GROUP_ID = process.env.GROUP_ID; // a'zolikni tekshirish guruhi
+const ESSE_GROUP_ID = process.env.ESSE_GROUP_ID; // natijalar e'lon qilinadigan esse guruhi
 const ADMIN_ID = process.env.ADMIN_ID;
 
 if (!BOT_TOKEN || !GROUP_ID || !ADMIN_ID) {
   console.error('BOT_TOKEN, GROUP_ID va ADMIN_ID Railway Variables bo\'limida sozlanishi shart!');
   process.exit(1);
+}
+
+if (!ESSE_GROUP_ID) {
+  console.warn('ESSE_GROUP_ID sozlanmagan: /yakunlash guruhga yubormaydi!');
 }
 
 const bot = new Telegraf(BOT_TOKEN);
@@ -103,7 +108,7 @@ let groupChatInfoCache = null;
 async function getGroupChatInfo() {
   if (!groupChatInfoCache) {
     try {
-      groupChatInfoCache = await bot.telegram.getChat(GROUP_ID);
+      groupChatInfoCache = await bot.telegram.getChat(ESSE_GROUP_ID);
     } catch (e) {
       console.error('Guruh ma\'lumotini olishda xato:', e.message);
       groupChatInfoCache = {};
@@ -117,7 +122,7 @@ async function buildGroupMessageLink(messageId) {
   if (chatInfo.username) {
     return `https://t.me/${chatInfo.username}/${messageId}`;
   }
-  const idStr = String(GROUP_ID);
+  const idStr = String(ESSE_GROUP_ID);
   if (idStr.startsWith('-100')) {
     const internalId = idStr.slice(4);
     return `https://t.me/c/${internalId}/${messageId}`;
@@ -200,6 +205,7 @@ bot.command('mavzu_ochirish', async (ctx) => {
 
 bot.command('yakunlash', async (ctx) => {
   if (!isAdmin(ctx)) return;
+  if (!ESSE_GROUP_ID) return ctx.reply('⚠️ ESSE_GROUP_ID Railway Variables da sozlanmagan. Natijalar guruhga yuborilmaydi.');
   const pending = store.getAllUnfinalizedSubmissions();
   if (pending.length === 0) {
     return ctx.reply('Hozircha yakunlanmagan esse yo\'q — hammasi allaqachon yakunlangan yoki hech kim topshirmagan.');
@@ -222,6 +228,7 @@ bot.action('finalize_cancel', async (ctx) => {
 bot.action('finalize_confirm', async (ctx) => {
   await ctx.answerCbQuery();
   if (!isAdmin(ctx)) return;
+  if (!ESSE_GROUP_ID) return ctx.reply('⚠️ ESSE_GROUP_ID Railway Variables da sozlanmagan. Natijalar guruhga yuborilmaydi.');
 
   const pending = store.getAllUnfinalizedSubmissions();
   if (pending.length === 0) {
@@ -262,12 +269,12 @@ bot.action('finalize_confirm', async (ctx) => {
 
       let firstMessageId = null;
       for (const chunk of splitLongText(groupHeader)) {
-        const sentMsg = await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML' });
+        const sentMsg = await sendGroupMessageSafe(ESSE_GROUP_ID, chunk, { parse_mode: 'HTML' });
         if (!firstMessageId && sentMsg) firstMessageId = sentMsg.message_id;
       }
 
       for (const chunk of splitLongText(sub.resultText)) {
-        await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML' });
+        await sendGroupMessageSafe(ESSE_GROUP_ID, chunk, { parse_mode: 'HTML' });
       }
 
       if (firstMessageId) {
@@ -275,7 +282,7 @@ bot.action('finalize_confirm', async (ctx) => {
         if (link) groupLinks[sub.id] = link;
       }
 
-      await sendGroupMessageSafe(GROUP_ID, '➡️➡️➡️');
+      await sendGroupMessageSafe(ESSE_GROUP_ID, '➡️➡️➡️');
     } catch (e) {
       console.error(`Guruhga yuborishda xato (esse ${sub.id}):`, e.message);
       groupFailures.push(sub.fullName);
@@ -314,7 +321,7 @@ bot.action('finalize_confirm', async (ctx) => {
     });
 
     for (const chunk of splitLongText(leaderboardMsg)) {
-      await sendGroupMessageSafe(GROUP_ID, chunk, { parse_mode: 'HTML', disable_web_page_preview: true });
+      await sendGroupMessageSafe(ESSE_GROUP_ID, chunk, { parse_mode: 'HTML', disable_web_page_preview: true });
     }
   } catch (e) {
     console.error('TOP-3 reyting yuborishda xato:', e.message);
