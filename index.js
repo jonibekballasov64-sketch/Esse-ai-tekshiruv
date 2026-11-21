@@ -331,13 +331,15 @@ bot.action('finalize_confirm', async (ctx) => {
   try {
     const buffer = await buildExcelReport(pending);
     store.markFinalized(pending.map((s) => s.id));
+    const hadTopic = !!store.getCurrentTopic();
+    store.clearCurrentTopic(); // yakunlangach joriy mavzu avtomatik o'chadi
     await bot.telegram.sendDocument(
       ADMIN_ID,
       { source: buffer, filename: `hisobot-${store.todayStr()}.xlsx` },
       { caption: `📊 ${pending.length} ta esse bo'yicha hisobot` }
     );
     const failNote = groupFailures.length > 0 ? `\n⚠️ ${groupFailures.length} ta esse guruhga yuborilmadi (yuqoridagi xabarga qarang).` : '';
-    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi, guruhga e'lon qilindi, TOP-3 chop etildi va hisobot fayli tayyor.${failNote}`);
+    await ctx.reply(`✅ Yakunlandi. ${sentCount}/${pending.length} ta natija yuborildi, guruhga e'lon qilindi, TOP-3 chop etildi va hisobot fayli tayyor.${hadTopic ? "\n🧹 Joriy mavzu o'chirildi — yangi mavzu uchun /mavzu bosing." : ''}${failNote}`);
   } catch (e) {
     console.error('Hisobot yaratishda xato:', e.message);
     await ctx.reply(`⚠️ Natijalar yuborildi (${sentCount}/${pending.length}), lekin hisobot faylini yaratishda xato: ${e.message}`);
