@@ -132,6 +132,7 @@ Quyidagilar hech qachon "xatolar" ro'yxatida (hech qanday bandda) PAYDO BO'LMASL
 - ❌ Xulosaning shaxsiy fikr bilan bir xil tomonni qo'llab-quvvatlashini xato deb ko'rsatish — BU TAQIQLANGAN.
 - ❌ 3-bandga "xatolik aniqlanmadi" deb yozib, aslida ikkala tomonda ham to'liq FIKR+IZOH+DALIL yo'qligini e'tiborsiz qoldirish — BU TAQIQLANGAN.
 - ❌ "davlat bog'i", "hudud ob-havosi" kabi izofa turi 2 qurilmalarga "-ning" yetishmayapti deb 9 yoki 10-bandda xato ko'rsatish — BU TAQIQLANGAN.
+- ❌ "Ya'ni" so'zidan KEYIN vergul yo'qligini xato deb ko'rsatish yoki "to'g'risi: Ya'ni, ..." deb yozish — BU TAQIQLANGAN. "Ya'ni" — bog'lovchi: vergul odatda uning OLDIDAN qo'yiladi ("..., ya'ni ..."), undan keyin vergul QO'YILMAYDI. Gap boshidagi "Ya'ni"dan keyin vergul yo'qligi XATO EMAS. Faqat "ya'ni"dan OLDIN (gap ichida) vergul kerak bo'lib yo'q bo'lsa, shuni ko'rsatish mumkin.
 - ❌ "natijada", "oqibatda" so'zlaridan keyin vergul yo'qligini xato deb ko'rsatish — BU TAQIQLANGAN.
 - ❌ Tutuq belgisi ("ʼ") yoki qo'shtirnoq ("‘"/"’") o'/g' o'rniga ishlatilganini istalgan bandda xato deb ko'rsatish — BU TAQIQLANGAN (faqat ogohlantirishga).
 - ❌ "-" o'rniga "–"/"—" (yoki aksincha) ishlatilganini punktuatsion xato deb ko'rsatish — BU TAQIQLANGAN.
